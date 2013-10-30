@@ -1,0 +1,226 @@
+* John Bent did an ADIO layer for MPI IO via PLFS
+
+List-io 'list of operations of memory locations and what they are, and
+desc of apps use of dist mem and a desire to take that discrete set of ops
+and structures and write them out'.
+
+THese are the calls we would like to take advantage of fractal trees
+because its a list of things to be interpreted. This is originaly what
+Gary/John meant in his first email. 
+
+MPIIO is a useful interface for intercepting things. Tokutek wants to
+build a system with fractal trees. 
+
+MPI abstracts complicated networks with a layer.
+
+Gary suggests to use MPI IO as an efficient interface to get a set of dist
+participants to get them to express their dist data structure and at the
+same time ge ta communicator to talk to each other.
+
+Bradley: how should we go about structuring the project, what should John
+Esmet do?
+
+Gary: Go to PVFS ADIO layer which has an example of how to do LIST io.
+There are statements like non-contig mem /contig on disk, etc etc etc.
+This code is called when a collective write is done, and the communicator
+is passed, the communicator has dimensino because it was created with some
+dim so people know who ther neighbors are and you knwo the dist mem
+layeroutl ike the vectors of floats or whatever they're writing and you
+knwo all that in one place int his layer and there's example of it in PVFS
+ADIO. Out of that code comes a list of IOs, its a list of "take this
+vector and put it in this part of this file" etc etc. That's what comes
+out of this. My suggestion was that you could take that piece of code and
+look at it and say how can i take that info and store it in something
+that's along the lines of what tokutek does well.
+
+John: BTW, MPI IO ADIO director when you look at the src theres ad_pvfs/2.
+Two is the first version. One is deprecrated. But the code in the original
+pvfs is much easier. So when you create an adio layer you can either
+override stuff or default. I don't know if the original does list io, but
+if it does use that as a starting point cause its less comp licated.
+    Otherwise, do pvfs2.
+
+Gary: I was hoping this would be a slick way to take apps that already use
+this mpi stuff and be able to store stuff in a fractal tree and not a file
+system.
+
+Bradley: What should we start with? What can we say and modify and say
+does this work?
+
+Gary: MPI IO ships with examples. One of them is a collective io which
+does this dist data stype and its like 50 lines that runs mpi io from the
+top. and so if it were me i would start with that and write my own or just
+hijack the pvfs adio layer, that way you dont have to figure it out, and
+if you use pvfs it already has the right functions declared and, modify it
+    to write the collective io into a tokutek database instead of a file
+    systme. that would get you essentially any appilcation that does that
+    thing, would run against your modded library. you store the records in
+    something other than a file. After that, you coudl optimize adio in
+    other ways. I wouldn't go that far, real apps do alot of computing and
+    dont want that. I would dgo after IO kernels, and ther eare IO kernesl
+    that do this functions.
+
+Bradley: LOoking into the future a bit, then, if we run these io kernels
+and you know, do well on it, are ppl gonna be interested in trying it out?
+
+Gary; Theres one more step. Why did you put in a db or fractal tree as
+opposed to laying it out on a flat file? That's the next step. Once you
+have data in the wahtever formats, the obvious thing you wanna do is query
+them. Find geometries that goes through the 3d matrix of values and pull
+out some subset based on that. So the first step can you store it into a
+fractal tree db, then bench. Queries should be good on a db, but suck on a
+file systme. So we should write as well as the file systme but read
+better. Thats when we get to the point where people are interested in it.
+
+Bradley; We can do a thing where we define and query the data in advance
+so that any point along the way you can query. 
+
+* Lost me here... *
+
+Gary: Well its handed to the ADIO layer and where its out in memory. What
+adi does is pick the x dimension and lays it out in x, then y, then z.
+That's what happens in the current adi layers. But since we're not
+concerned with serializing it, we dont' have to suffer that pain cause
+were not a file.
+
+Bradley: Presumely we're doing a write that is larger than main memmory:
+
+Gary: no
+
+Bradley: WHere's the payoff?
+
+Gary: The entire thing is much larger, but not individual things? (IDK?)
+
+Bradley: THe data arrives to a couarse approx by time step, and you wanna
+do q's that are not all the items in a particular time step, you wan tto
+    slice it another way. Thats right?
+
+*** ASIDE *** sounds like massive incoming data, with queries in between,
+over a long period of time.
+
+Bradley: Sounds like we're doing things with locality in the file system.
+Where's the pay off? It's writing gessentially for a given time step all
+the data, presumably it does a sort by its coord and writes it all out.
+
+Gary: Harder than that. This is parallel, so imagine a struct where you
+break it up into subsets and give it to n processes. to get in in x order
+on a file, you must take x0 y0 z0 ... etc and the vector it represents for
+reach process and take the same one for each other processes and wraps it
+around and youre basically collecting vectors from procesors and ordering
+them and writing it to a file. Lots of them wanna write a little bit,
+small part of file. to avoid it, you can collectively buffer in mpi io.
+typicall they do this. and so you can hav erelative efficiently by using
+this technique. but then you lose everyting except one dimension (huH???)
+*** LOST ME HERE ***
+
+Bradley: so the file system is it like an array of timestep t and coords
+xyz and you can calc the loc of it?
+
+Gary: Yes, standard array indexing, but it may be that its relaly hard to
+achieve/retrieve in parallel. It may not be, but it may be.
+
+open/write/close for collective io are all we'd have to do to get started.
+List IO stuff.  the problem i dont get is that all you'll be seeing
+offsets and lengths.
+
+gary: you're handed the complex type that's built, that says I"m an array
+of x and starts here and ends here in this processes, etc etc etc. and so
+no more than offsets. you knwo what c type it is. you know what dimensions
+its going, who its neighbors are, etc. you know dimensionality, you know
+the type, ands o you know what vector means, its not just bytes. (John in
+a struct? in a type? defined type? complicated structs?) Gary yes prob,
+you can pry it apart and in fact and convert it be bytes/fofsets/lenghts
+in adio so the fs can deal with it.
+
+but why bother lsoing the semantics. Can you take the omplex type with
+semantic info
+
+File system will destroy the nice types and serial them, with a mapping
+layer. We can do better with the DB???  Key/Val instead?? ADIO does this.
+A different ADIO layer which instead of mapping in/out of a file, do it in
+a db.Gary is desc kind sof query that will happen.
+
+
+Gary: Why cant you build indexes over the vlues as the come in, right, and
+you dont have to destroy the complex type?
+
+Gary: If we know all these semantics and w ecan index, can we get a
+smaller representation from list-built adio stuff, and optimize based on
+that. And you dont' have to restore it in many orders (cluster indexes). 
+
+Bradley: What can you suggest for an app with IO problems?
+
+Gary: IO Kernels. Depends on the problem. Flash IO? (Bradley: Read/Write?)
+It just writes data. Its the analysis we're wondering about. 
+
+John: Can you use TokuDB as the store for a backend FS? TokuDB is good at
+concurrent access/inserts/del. We use PLFS to get around the fact that
+ordinary parallel file systems are not good at this. My initial
+misunderstaindg was: what's a fractal tree just gonna do with an array of
+file offsets? Build a parallel file system on top of TokuDB?
+
+Bradley: We could build a system that, to the outside world, looks like a
+flat file. For the purpose of discussion, lets talk about records of same
+size. To simplify. So what we get from some layer of the system is "heres
+record i, i+200, i-3, etc" and we can ingest those records in any order
+(cause we're a fratacl tree) and then we an feed them back to you if you
+ask for them, in one disk io. The problemt ath you would have if you did
+it to a normal FS, the writes are going out and coming in and does random
+io, which is bad. Thats the losing situation. Disk head movement. Append
+file system, writes are fast, but queries are slow. (We're int he middle?) 
+
+Gary: Look at reproducing all of the perf benefits from PLFS with yoru
+system and then showing how that works for reads. Cause reads are still
+provlematic in PLFS in some workloads. Fractal tree would be a nice
+benefit to some workloads.
+
+Bradley: We take the ADIO layer and take the actual data/metadata and
+assume that it's sorted by filename, or something, and take the actual
+data and its sorted by offset, and if it comes in at a random order , and
+read out in range queruies, we would love to get our hands on that.
+
+Gary; prob with PLFS is that it solves the same prob in that it can do
+inserts very quickly regardless of where they are but then theres a
+question of are we seeking the disks in HPC cause there are so many disks
+cause there are so many but what matters is how many spindles are spinning
+at any one time. PLFS has tons of meta data, that's what we're working on
+now, so reads are slow. Maybe tokudb can fix this today? Make Tokudb th
+eunderlying STORE of a files system (TOKUFS!). How fast can you open it?
+In plfs it's slow. 36 bytes metadata per write. To read, we have to go
+through this metadata.
+
+Papers: PLFS paper. SC09o
+
+Gary: You could write a whole file system and do what PLFS was supposed to
+do, since we're bad at writes. Or just put tokudb as PLFS's indexing
+    structure. This probably isnt' the way to go though. The reason our
+    reads are so difficul tis because the file isn't flat. I dont' care
+    how or where the dat ais on disk. But the logical view makes it look
+    like that, that's what we need, but it needs 36b per write. If instead
+    we use tokudb to do the inserts, which is fast at inserts in a sorted
+    sturcutre, we can put tons and tons of stuff into tokudb which is file
+    data, but if we can do that, if we could just inserst al hte data int
+    tokudb, then on read there's nothing to do caseu its sorted for us.
+
+Bradley: IF we attack it that way, is the easiest way to do that to make
+PLFS with a version with fractal tree or PVFS ADIO.
+
+Bradley: What should john esmet be focused on?
+
+Gary: Write a full fledged file system that uses tokudb as a store. If you
+do that, I can give you that uses an app that does badd writes on a normal
+    fs but if you can save that data qwuickly in a fractal tree, then you
+    can do what plfs has done, and plfs is important to doe at exoscale.
+    If you JUST do that, then you're as good as plfs today. But then if
+    you do that right, that you'll do much better than plfs.
+
+
+TLDR;
+
+PLFS was created at LANL to fix the problem of random unaligned writes
+coming into to a file system which couldn't handle it. They rearranged the
+calls to make them serial. TokuDB can handle random writes by design, so
+we should create a file system that wraps TokuDB to get the write
+performance of PLFS without the sacrifices they made for reads, since
+their data structure is essentially a collection of append-to-file
+structures.

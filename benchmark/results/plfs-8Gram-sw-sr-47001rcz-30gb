@@ -1,0 +1,78 @@
+File system benchmark
+invoked via: bin/benchmark-fs --serial-write --serial-read -x 47001 -n 650000 -m 8000 -v -o /res/users/esmet/plfs-8Gram-sw-sr-47001rcz-30gb -u -f /tall2/local/esmet/plfs_mount/file 
+ * Hostname: tall2.rutgers.edu
+ * Number of records: 650000
+ * Record size: 47001
+ * File size: 30550650000
+ * Compressibility: 1
+ * Target file name: /tall2/local/esmet/plfs_mount/file
+ * Target file system: ufs
+ * Page size: 4096
+ * Verbose? yes
+ * Benchmarking serial write? yes
+ * Benchmarking random write? no
+ * Benchmarking serial read? yes
+ * Benchmarking random read? no
+ * Output: /res/users/esmet/plfs-8Gram-sw-sr-47001rcz-30gb
+Benchmarks starting: Wed Aug 24 15:59:21 2011
+-- benchmark_serial_write: opening /tall2/local/esmet/plfs_mount/file
+-- benchmark_serial_write: done
+-- wrote 1527532500 bytes so far, throughput 488.109
+-- wrote 3055065000 bytes so far, throughput 486.287
+-- wrote 4582597500 bytes so far, throughput 483.155
+-- wrote 6110130000 bytes so far, throughput 483.961
+-- wrote 7637662500 bytes so far, throughput 295.878
+-- wrote 9165195000 bytes so far, throughput 195.501
+-- wrote 10692727500 bytes so far, throughput 144.107
+-- wrote 12220260000 bytes so far, throughput 145.400
+-- wrote 13747792500 bytes so far, throughput 137.364
+-- wrote 15275325000 bytes so far, throughput 146.043
+-- wrote 16802857500 bytes so far, throughput 127.371
+-- wrote 18330390000 bytes so far, throughput 127.645
+-- wrote 19857922500 bytes so far, throughput 125.023
+-- wrote 21385455000 bytes so far, throughput 124.600
+-- wrote 22912987500 bytes so far, throughput 127.475
+-- wrote 24440520000 bytes so far, throughput 120.758
+-- wrote 25968052500 bytes so far, throughput 122.178
+-- wrote 27495585000 bytes so far, throughput 121.268
+-- wrote 29023117500 bytes so far, throughput 121.084
+-- benchmark_serial_write: closing /tall2/local/esmet/plfs_mount/file
+-- benchmark_serial_write: done
+-- benchmark_serial_read: opening /tall2/local/esmet/plfs_mount/file
+-- benchmark_serial_read: done
+-- read 1527532500 bytes so far, throughput 263.543
+-- read 3055065000 bytes so far, throughput 261.110
+-- read 4582597500 bytes so far, throughput 262.813
+-- read 6110130000 bytes so far, throughput 262.699
+-- read 7637662500 bytes so far, throughput 262.611
+-- read 9165195000 bytes so far, throughput 260.693
+-- read 10692727500 bytes so far, throughput 262.086
+-- read 12220260000 bytes so far, throughput 258.630
+-- read 13747792500 bytes so far, throughput 258.897
+-- read 15275325000 bytes so far, throughput 258.741
+-- read 16802857500 bytes so far, throughput 259.459
+-- read 18330390000 bytes so far, throughput 259.845
+-- read 19857922500 bytes so far, throughput 260.532
+-- read 21385455000 bytes so far, throughput 260.213
+-- read 22912987500 bytes so far, throughput 260.769
+-- read 24440520000 bytes so far, throughput 261.078
+-- read 25968052500 bytes so far, throughput 261.194
+-- read 27495585000 bytes so far, throughput 261.287
+-- read 29023117500 bytes so far, throughput 261.217
+-- benchmark_serial_read: closing /tall2/local/esmet/plfs_mount/file
+-- benchmark_serial_read: done
+Benchmarks completed: Wed Aug 24 16:05:37 2011
+Serial write times:
+ * open:           769
+ * io:             250488725
+ * close:          3494089
+ * total:          253983640
+ * io throughput:  121.964172 MB/s
+ * effective:      120.285897 MB/s
+Serial read times:
+ * open:           4839276
+ * io:             116954318
+ * close:          69894
+ * total:          121863724
+ * io throughput:  261.218658 MB/s
+ * effective:      250.695195 MB/s

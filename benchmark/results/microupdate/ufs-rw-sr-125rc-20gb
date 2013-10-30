@@ -1,0 +1,21 @@
+File system benchmark
+invoked via: bin/benchmark-fs --random-write --serial-read -x 125 -n 171798680 -v -u -o /res/users/esmet/ufs-rw-sr-125rc-20gb 
+    * Hostname: tall2.rutgers.edu
+    * Date: Tue Aug  9 15:57:40 2011
+    * Number of records: 171798680
+    * Record size: 125
+    * File size: 21474835000
+    * Compressibility: 1
+    * Target file name: dumpfile.fsbench
+    * Target file system: ufs
+    * Page size: 4096
+    * Verbose? yes
+    * Benchmarking serial write? no
+    * Benchmarking random write? yes
+    * Benchmarking serial read? yes
+    * Benchmarking random read? no
+    * Output: /res/users/esmet/ufs-rw-sr-125rc-20gb
+benchmark_random_write: opened dumpfile.fsbench
+wrote 1073741750 bytes so far, throughput 0.039
+wrote 2147483500 bytes so far, throughput 0.025
+wrote 3221225250 bytes so far, throughput 0.022

@@ -1,0 +1,75 @@
+#
+# TokuFS
+#
+
+CC          = @CC@
+AR          = @AR@
+RANLIB      = @RANLIB@
+LIBNAME     = @LIBNAME@
+srcdir      = @srcdir@
+CC_SHL      = @CC_SHL@
+SHLIBNAME   = @SHLIBNAME@
+
+CPPFLAGS	= @CPPFLAGS@
+INCLUDES	= -I@MPI_INCLUDE_DIR@ -I${srcdir}/../include -I../include -I../../include  -I${srcdir}/../../../../include -I../../../../include
+CFLAGS		= @CFLAGS@
+
+top_builddir	= @master_topbuild_dir@
+LIBTOOL			= @LIBTOOL@
+C_COMPILE		= $(CC) $(DEFS) $(INCLUDES) $(CFLAGS) $(CPPFLAGS)
+C_COMPILE_SHL	= $(CC_SHL) $(DEFS) $(INCLUDES) $(CFLAGS) $(CPPFLAGS)
+
+@VPATH@
+
+AD_TOKUFS_OBJECTS =			\
+		ad_tokufs_open.o	\
+		ad_tokufs_close.o	\
+		ad_tokufs_read.o	\
+		ad_tokufs_write.o	\
+		ad_tokufs_flush.o	\
+		ad_tokufs_delete.o	\
+		ad_tokufs_fcntl.o	\
+		ad_tokufs_resize.o	\
+		ad_tokufs.o         \
+	
+default: $(LIBNAME)
+	@if [ "@ENABLE_SHLIB@" != "none" ] ; then \
+		$(MAKE) $(SHLIBNAME).la ;\
+	fi
+
+.SUFFIXES: $(SUFFIXES) .p .lo
+
+.c.o:
+	@if [ "x$(VERBOSE)" != "x1" ] ; then \
+	  echo "  CC              $<" ; \
+	else \
+	  echo $(C_COMPILE) -c $< ; \
+	fi
+	@$(C_COMPILE) -c $<
+
+.c.lo:
+	@if [ "x$(VERBOSE)" != "x1" ] ; then \
+	  echo "  CC              $<" ; \
+	else \
+	  echo $(C_COMPILE_SHL) -c $< -o _s$*.o ; \
+	  echo mv -f _s$*.o $*.lo ; \
+	fi
+	@$(C_COMPILE_SHL) -c $< -o _s$*.o
+	@mv -f _s$*.o $*.lo
+
+$(LIBNAME): $(AD_TOKUFS_OBJECTS)
+	$(AR) $(LIBNAME) $(AD_TOKUFS_OBJECTS)
+	$(RANLIB) $(LIBNAME) 
+
+AD_TOKUFS_LOOBJECTS=$(AD_TOKUFS_OBJECTS:.o=.lo)
+$(SHLIBNAME).la: $(AD_TOKUFS_LOOBJECTS)
+	$(AR) $(SHLIBNAME).la $(AD_TOKUFS_LOOBJECTS)
+
+coverage:
+	-@for file in  ${AD_TOKUFS_OBJECTS:.o=.c} ; do \
+		gcov -b -f $$file ; done
+
+clean:
+	@rm -f *.o *.lo *.gcno *.gcda *.bb *.bbg
+	@rm -f ${srcdir}/*.gcno ${srcdir}/*.gcda 
+	@rm -f ${srcdir}/*.bb ${srcdir}/*.bbg

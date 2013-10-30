@@ -1,0 +1,148 @@
+reporting 20 intervals of throughput progress for a one file benchmark
+filesystem benchmark
+invoked via: /mnt/xfs/tokufs/benchmark/benchmark-fs-threaded --dir=/mnt/btrfs/microfile-bucket.1330694263 --scan -u 
+ * dir: /mnt/btrfs/microfile-bucket.1330694263
+ * started: Mon Mar  5 10:52:16 2012
+ * pid: 1333
+ * hostname: justice
+ * file op interface: posix
+ * num files: 1
+ * max children: 100
+ * num threads: 1
+ * num operations: 1
+ * IO type: pwrite
+ * IO pattern: serial
+ * size of each IO op: 512
+ * size of each file: 512
+ * filesystem pagesize: 4096
+ * cachesize: 0 MB
+ * verbose? no
+ * report progress? yes
+Scanning the entire directory tree, counting children, total size
+* progress: scanned 6000 files in 78556309 usec, 76.378334 files/second
+* progress: scanned 12000 files in 146343571 usec, 81.998819 files/second
+* progress: scanned 20000 files in 218724475 usec, 91.439241 files/second
+* progress: scanned 28000 files in 284891716 usec, 98.282956 files/second
+* progress: scanned 38000 files in 360250615 usec, 105.482124 files/second
+* progress: scanned 48000 files in 432040329 usec, 111.100739 files/second
+* progress: scanned 58000 files in 501948956 usec, 115.549598 files/second
+* progress: scanned 68000 files in 570250799 usec, 119.245778 files/second
+* progress: scanned 78000 files in 635251284 usec, 122.786056 files/second
+* progress: scanned 88000 files in 699869196 usec, 125.737781 files/second
+* progress: scanned 98000 files in 760294729 usec, 128.897382 files/second
+* progress: scanned 108000 files in 822330631 usec, 131.334035 files/second
+* progress: scanned 118000 files in 883214207 usec, 133.602923 files/second
+* progress: scanned 130000 files in 948991846 usec, 136.987478 files/second
+* progress: scanned 142000 files in 1015840625 usec, 139.785707 files/second
+* progress: scanned 154000 files in 1076962704 usec, 142.994738 files/second
+* progress: scanned 168000 files in 1146688349 usec, 146.508858 files/second
+* progress: scanned 182000 files in 1214102865 usec, 149.904926 files/second
+* progress: scanned 196000 files in 1279202126 usec, 153.220508 files/second
+* progress: scanned 210000 files in 1344083708 usec, 156.240269 files/second
+* progress: scanned 224000 files in 1410145540 usec, 158.848852 files/second
+* progress: scanned 240000 files in 1475633874 usec, 162.641970 files/second
+* progress: scanned 254000 files in 1543854777 usec, 164.523246 files/second
+* progress: scanned 268000 files in 1605173209 usec, 166.960175 files/second
+* progress: scanned 282000 files in 1669207643 usec, 168.942433 files/second
+* progress: scanned 296000 files in 1734379519 usec, 170.666222 files/second
+* progress: scanned 310000 files in 1801089197 usec, 172.118072 files/second
+* progress: scanned 324000 files in 1862080840 usec, 173.998890 files/second
+* progress: scanned 338000 files in 1924699190 usec, 175.611858 files/second
+* progress: scanned 352000 files in 1990588437 usec, 176.832133 files/second
+* progress: scanned 366000 files in 2054605477 usec, 178.136389 files/second
+* progress: scanned 382000 files in 2124050567 usec, 179.845059 files/second
+* progress: scanned 396000 files in 2191726806 usec, 180.679453 files/second
+* progress: scanned 410000 files in 2254406989 usec, 181.866008 files/second
+* progress: scanned 424000 files in 2319420387 usec, 182.804291 files/second
+* progress: scanned 438000 files in 2384567801 usec, 183.681085 files/second
+* progress: scanned 452000 files in 2445425065 usec, 184.834942 files/second
+* progress: scanned 468000 files in 2508968146 usec, 186.530866 files/second
+* progress: scanned 484000 files in 2575453043 usec, 187.928101 files/second
+* progress: scanned 498000 files in 2635550423 usec, 188.954837 files/second
+* progress: scanned 514000 files in 2700358202 usec, 190.345118 files/second
+* progress: scanned 530000 files in 2766514288 usec, 191.576816 files/second
+* progress: scanned 546000 files in 2837896294 usec, 192.396037 files/second
+* progress: scanned 560000 files in 2901075736 usec, 193.031844 files/second
+* progress: scanned 576000 files in 2969403549 usec, 193.978350 files/second
+* progress: scanned 590000 files in 3037478121 usec, 194.240082 files/second
+* progress: scanned 604000 files in 3099335306 usec, 194.880495 files/second
+* progress: scanned 618000 files in 3160469557 usec, 195.540564 files/second
+* progress: scanned 632000 files in 3222150590 usec, 196.142291 files/second
+* progress: scanned 646000 files in 3288175804 usec, 196.461515 files/second
+* progress: scanned 660000 files in 3348811306 usec, 197.084858 files/second
+* progress: scanned 674000 files in 3413996848 usec, 197.422561 files/second
+* progress: scanned 688000 files in 3477245750 usec, 197.857744 files/second
+* progress: scanned 702000 files in 3542932373 usec, 198.140954 files/second
+* progress: scanned 716000 files in 3608843555 usec, 198.401507 files/second
+* progress: scanned 730000 files in 3669849879 usec, 198.918218 files/second
+* progress: scanned 744000 files in 3734045418 usec, 199.247710 files/second
+* progress: scanned 758000 files in 3801792542 usec, 199.379633 files/second
+* progress: scanned 772000 files in 3866232422 usec, 199.677597 files/second
+* progress: scanned 786000 files in 3930088049 usec, 199.995519 files/second
+* progress: scanned 800000 files in 3997313426 usec, 200.134419 files/second
+* progress: scanned 814000 files in 4064222274 usec, 200.284321 files/second
+* progress: scanned 828000 files in 4127539780 usec, 200.603760 files/second
+* progress: scanned 842000 files in 4191372653 usec, 200.888842 files/second
+* progress: scanned 856000 files in 4253981617 usec, 201.223248 files/second
+* progress: scanned 870000 files in 4321416365 usec, 201.322883 files/second
+* progress: scanned 884000 files in 4382811760 usec, 201.697004 files/second
+* progress: scanned 898000 files in 4447256042 usec, 201.922262 files/second
+* progress: scanned 914000 files in 4515778430 usec, 202.401427 files/second
+* progress: scanned 928000 files in 4580656481 usec, 202.591049 files/second
+* progress: scanned 942000 files in 4650761723 usec, 202.547466 files/second
+* progress: scanned 956000 files in 4711471230 usec, 202.909018 files/second
+* progress: scanned 970000 files in 4778165764 usec, 203.006770 files/second
+* progress: scanned 984000 files in 4846811265 usec, 203.020078 files/second
+* progress: scanned 998000 files in 4907232861 usec, 203.373271 files/second
+* progress: scanned 1012000 files in 4972760049 usec, 203.508713 files/second
+* progress: scanned 1026000 files in 5042363102 usec, 203.476025 files/second
+* progress: scanned 1040000 files in 5102903516 usec, 203.805539 files/second
+* progress: scanned 1054000 files in 5164462911 usec, 204.087050 files/second
+* progress: scanned 1068000 files in 5224585022 usec, 204.418149 files/second
+* progress: scanned 1082000 files in 5286152903 usec, 204.685718 files/second
+* progress: scanned 1096000 files in 5351508392 usec, 204.802071 files/second
+* progress: scanned 1110000 files in 5415516334 usec, 204.966605 files/second
+* progress: scanned 1124000 files in 5477006047 usec, 205.221610 files/second
+* progress: scanned 1138000 files in 5541580479 usec, 205.356577 files/second
+* progress: scanned 1152000 files in 5603001127 usec, 205.604099 files/second
+* progress: scanned 1166000 files in 5663757405 usec, 205.870400 files/second
+* progress: scanned 1180000 files in 5727644333 usec, 206.018379 files/second
+* progress: scanned 1194000 files in 5791725252 usec, 206.156188 files/second
+* progress: scanned 1208000 files in 5856222919 usec, 206.276301 files/second
+* progress: scanned 1222000 files in 5921879393 usec, 206.353409 files/second
+* progress: scanned 1236000 files in 5990673312 usec, 206.320715 files/second
+* progress: scanned 1250000 files in 6053767200 usec, 206.482998 files/second
+* progress: scanned 1264000 files in 6120668987 usec, 206.513373 files/second
+* progress: scanned 1278000 files in 6187451767 usec, 206.547065 files/second
+* progress: scanned 1292000 files in 6251653778 usec, 206.665315 files/second
+* progress: scanned 1306000 files in 6312929123 usec, 206.877026 files/second
+* progress: scanned 1320000 files in 6376599090 usec, 207.006898 files/second
+* progress: scanned 1334000 files in 6442901476 usec, 207.049573 files/second
+* progress: scanned 1348000 files in 6508546370 usec, 207.112299 files/second
+* progress: scanned 1362000 files in 6576537569 usec, 207.099859 files/second
+* progress: scanned 1376000 files in 6641538216 usec, 207.180920 files/second
+* progress: scanned 1390000 files in 6707685555 usec, 207.224979 files/second
+* progress: scanned 1404000 files in 6774024558 usec, 207.262313 files/second
+* progress: scanned 1418000 files in 6839174001 usec, 207.334979 files/second
+* progress: scanned 1432000 files in 6902903525 usec, 207.448937 files/second
+* progress: scanned 1446000 files in 6962946342 usec, 207.670708 files/second
+* progress: scanned 1460000 files in 7031948904 usec, 207.623807 files/second
+* progress: scanned 1474000 files in 7096512977 usec, 207.707645 files/second
+* progress: scanned 1488000 files in 7165062588 usec, 207.674390 files/second
+* progress: scanned 1502000 files in 7228957086 usec, 207.775476 files/second
+* progress: scanned 1516000 files in 7294407131 usec, 207.830461 files/second
+* progress: scanned 1530000 files in 7357866323 usec, 207.940717 files/second
+* progress: scanned 1544000 files in 7426616769 usec, 207.900858 files/second
+* progress: scanned 1558000 files in 7494168020 usec, 207.894992 files/second
+* progress: scanned 1572000 files in 7561506923 usec, 207.895069 files/second
+* progress: scanned 1586000 files in 7629060085 usec, 207.889305 files/second
+* progress: scanned 1600000 files in 7693320188 usec, 207.972626 files/second
+* progress: scanned 1614000 files in 7761788401 usec, 207.941768 files/second
+* progress: scanned 1628000 files in 7827071593 usec, 207.996053 files/second
+* progress: scanned 1642000 files in 7895032676 usec, 207.978873 files/second
+* progress: scanned 1656000 files in 7961528331 usec, 208.000265 files/second
+* progress: scanned 1662000 files in 8092426718 usec, 205.377207 files/second
+* progress: scanned 1668000 files in 8155217805 usec, 204.531631 files/second
+* progress: scanned 1682000 files in 8221322573 usec, 204.589953 files/second
+* progress: scanned 1696000 files in 8291163853 usec, 204.555118 files/second
+* progress: scanned 1710000 files in 8359324024 usec, 204.561995 files/second

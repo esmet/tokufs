@@ -1,0 +1,53 @@
+                TokuFS - A Fractal Tree File System
+
+    File systems have traditionally been implemented using a B-tree style
+    index, which performs well for applications doing large, aligned, and
+    sequential IO. The data structure is designed to write data into its
+    final location the first time an update occurs, which means writes
+    with good locality tend to require optimally few disk IOs. The
+    drawback is in the opposite scenario, when writes have poor locality
+    and thus require many disk IOs.
+
+    Meet TokuFS, a microdata optimized, fragmentation free file system.
+    (This is the angle we SHOULD try to 'sell' TokuFS from. This is the
+    most accurate and well supported claim/description I can think of).
+
+[Definition of the problem]
+
+    A particularly troublesome workload for traditional file systems
+    involves rapid updates of "microdata" spread randomly over disk. This
+    workload will be referred to as "microupdate", where "microdata" will
+    be defined as any data, metadata or file data, that requires
+    negligable disk bandwidth to write compared to the worst case seek
+    time required to access it.
+
+[State of the art]
+
+- describe the state of the art, PLFS’s append to file data structure,
+  Btrees.
+- Show PLFS write bandwidth for random offsets. it is optimal.
+- Show xfs write bandwidth for sequential writes. it is optimal.
+
+[Problems]
+
+- problems with the state of the art, non clustered index of offset/data
+  pairs in plfs causes random I/O and poor read performance. random writes
+  to a Btree do the same.
+- problem with parallel file IO, xfs allocates blocks sequentially on disk
+  for N different files, so each file is fragmented.
+- show PLFS read bandwidth on a randomly written file. it is low.
+- show ext3/btreefs write bandwidth random offsets. it is ~0.
+- show xfs MPI bandwidth dispartiy between write/read
+- show iostat output that demonstrates poor use of IOPS
+
+[Proposed alternative]
+- proposed alternative is to use a fractal tree to index data blocks,
+  efficient even if they are random, and read faster than append-to-file
+  structures.
+- show tokufs write bandwidth for random offsets. it is reasonable.
+- show tokufs performance in MPI, good in both writes, reads, no frag.
+
+[Why it works]
+- why does it work? fractal trees do not fragment, use IOPS efficiently by
+  only going to disk when enough work is needed to be done.
+- show tokufs read bandwidth afterward, it is reasonable, not fragmented

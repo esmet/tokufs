@@ -1,0 +1,51 @@
+reporting 20 intervals of throughput progress for a one file benchmark
+filesystem benchmark
+invoked via: ./benchmark-fs-threaded --scan -u 
+ * dir: benchmark-bucket
+ * started: Mon Mar  5 08:44:57 2012
+ * pid: 757
+ * hostname: justice
+ * file op interface: posix
+ * num files: 1
+ * max children: 100
+ * num threads: 1
+ * num operations: 1
+ * IO type: pwrite
+ * IO pattern: serial
+ * size of each IO op: 512
+ * size of each file: 512
+ * filesystem pagesize: 4096
+ * cachesize: 0 MB
+ * verbose? no
+ * report progress? yes
+Scanning the entire directory tree, counting children, total size
+reporting 20 intervals of throughput progress for a one file benchmark
+filesystem benchmark
+invoked via: /mnt/xfs/tokufs/benchmark/benchmark-fs-threaded --dir=/mnt/ext4/microfile-bucket.1330890120 --scan -u 
+ * dir: /mnt/ext4/microfile-bucket.1330890120
+ * started: Mon Mar  5 08:50:21 2012
+ * pid: 889
+ * hostname: justice
+ * file op interface: posix
+ * num files: 1
+ * max children: 100
+ * num threads: 1
+ * num operations: 1
+ * IO type: pwrite
+ * IO pattern: serial
+ * size of each IO op: 512
+ * size of each file: 512
+ * filesystem pagesize: 4096
+ * cachesize: 0 MB
+ * verbose? no
+ * report progress? yes
+Scanning the entire directory tree, counting children, total size
+* progress: scanned 276000 files in 60053396 usec, 4595.909947 files/second
+* progress: scanned 1248000 files in 120072549 usec, 10393.716219 files/second
+* progress: scanned 1960000 files in 180542616 usec, 10856.162625 files/second
+* progress: scanned 2604000 files in 240804351 usec, 10813.758095 files/second
+* progress: scanned 3240000 files in 300828206 usec, 10770.266668 files/second
+* progress: scanned 3912000 files in 360847944 usec, 10841.131466 files/second
+* progress: scanned 4554000 files in 420902669 usec, 10819.603522 files/second
+scanned 5065664 files in 476548777 usec, 10629.896129 files/second
+total size of all files not including metadata 1000000000

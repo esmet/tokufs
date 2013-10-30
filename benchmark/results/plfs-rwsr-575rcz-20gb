@@ -1,0 +1,45 @@
+File system benchmark
+invoked via: bin/benchmark-fs --random-write --serial-read -x 575 -n 37347540 -m 1950 -v -f /tokufs/esmet/plfs_mount/file -u -o /home/esmet/plfs-rwsr-575rcz-20gb 
+ * Hostname: roadrunner.tokutek.com
+ * Number of records: 37347540
+ * Record size: 575
+ * File size: 21474835500
+ * Compressibility: 1
+ * Target file name: /tokufs/esmet/plfs_mount/file
+ * Target file system: ufs
+ * Page size: 4096
+ * Verbose? yes
+ * Benchmarking serial write? no
+ * Benchmarking random write? yes
+ * Benchmarking serial read? yes
+ * Benchmarking random read? no
+ * Output: /home/esmet/plfs-rwsr-575rcz-20gb
+Benchmarks starting: Thu Aug 25 17:57:46 2011
+-- benchmark_random_write: opening /tokufs/esmet/plfs_mount/file
+-- benchmark_random_write: done
+-- wrote 1073741775 bytes so far, throughput 48.592
+-- wrote 2147483550 bytes so far, throughput 48.427
+-- wrote 3221225325 bytes so far, throughput 48.333
+-- wrote 4294967100 bytes so far, throughput 48.303
+-- wrote 5368708875 bytes so far, throughput 48.308
+-- wrote 6442450650 bytes so far, throughput 48.293
+-- wrote 7516192425 bytes so far, throughput 48.277
+-- wrote 8589934200 bytes so far, throughput 48.258
+-- wrote 9663675975 bytes so far, throughput 48.245
+-- wrote 10737417750 bytes so far, throughput 48.227
+-- wrote 11811159525 bytes so far, throughput 48.236
+-- wrote 12884901300 bytes so far, throughput 47.984
+-- wrote 13958643075 bytes so far, throughput 47.787
+-- wrote 15032384850 bytes so far, throughput 47.702
+-- wrote 16106126625 bytes so far, throughput 47.715
+-- wrote 17179868400 bytes so far, throughput 47.676
+-- wrote 18253610175 bytes so far, throughput 47.701
+-- wrote 19327351950 bytes so far, throughput 47.686
+-- wrote 20401093725 bytes so far, throughput 47.693
+-- benchmark_random_write: closing /tokufs/esmet/plfs_mount/file
+-- benchmark_random_write: done
+-- benchmark_serial_read: opening /tokufs/esmet/plfs_mount/file
+-- benchmark_serial_read: done
+-- read 1073741775 bytes so far, throughput 0.071
+-- read 2147483550 bytes so far, throughput 0.071
+-- read 3221225325 bytes so far, throughput 0.070

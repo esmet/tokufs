@@ -1,0 +1,37 @@
+4168 directory api design needs to be refined.
+- need to fix outdated tests and write readdir test
+
+3921 bulk bstore get (scan)
+- can write pread in terms of scan after 4195
+
+bstore comparison fn:
+[x] - parameter to bstore_env_open
+[x] - tokufs passes a comparison function which:
+        - sorts pathnames by level order (num slashes first, then alpha)
+        - not just alpha order (which is depth order)
+
+tests:
+- tokufs/bstore truncate needs better tests
+and definitions before fixing it correctly
+- tokufs mkdir/rmdir/readdir refactor/write
+- tokufs stat
+- tokufs truncate needs a rewrite
+    - unint reads always return 0 now
+    - reads always ret num_bytes given (dont stop short)
+    - metadata needs to be verified (st.size && st.blocks?)
+- stress tests at bstore/tokufs
+- stress tests via fuse
+    [x] - fsx file system stress test
+    covers: random pread, pwrite, truncate, 
+            open/close workload in memory.
+            verifies contents, lots of
+            uninitialized reads.
+
+fuse:
+- why does fuse hate us? [x] multithreading
+- why does fuse ls -la hate us? [x] passing absolute paths to filler
+- why does svn co hang sometimes, in an apparent deadlock?
+- need to implement init/destroy to properly handle mount/umount
+
+experiment:
+

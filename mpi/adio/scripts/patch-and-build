@@ -1,0 +1,20 @@
+#!/bin/bash
+
+ROOT_DIR="$HOME/tokufs"
+
+# Fail fast if we don't have the mpich2 source tree
+if [ ! -e $ROOT_DIR/mpich2 ] ; then
+	echo "No mpich2 source tree. Use 'install' instead"
+	exit 1;
+fi
+
+# Patch and rebuild. First thing to do is patch up.
+$ROOT_DIR/scripts/apply-adio-patch
+if [ $? != 0 ] ; then
+	echo "Failed to generate and apply the adio tokufs patch"
+	exit 1;
+fi
+
+# Now rebuild
+(cd $ROOT_DIR/mpich2 && make && make install)
+

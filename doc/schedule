@@ -1,0 +1,135 @@
+######## TokuFS - Work schedule #########
+
+######### Primary Objectives #########
+
+* Add metadata and finalize the API, which gives us a fully functional
+* file system which looks and feels like a real one.
+
+* Reduce N fractal trees for N files into one, which addresses the
+* scalability issues we face as the number of files is more than a few.
+
+* Implement a complete FUSE implementation, which gives us a convenient
+* means for interposing on applications written for posix-like files.
+
+* Measure performance of "real-world" applications through FUSE
+
+* Measure performance of "real-world" benchmarks through FUSE
+
+* Measure performance of specific benchmark-fs extended workloads
+* through the direct API.
+
+* Measure performance overhead incurred by FUSE, giving us a good metric
+* for predicting the performance increase an application could see by
+* switching to the direct tokufs api.
+
+######### Schedule #########
+
+- Define a work day to be ~2.5 hours in a regular day including class,
+  homework, college things, etc.
+- Define a work week to be 5 work days, roughly a day and a half of
+  regular full time work (12 hours)
+
+Time of writing: Sept 15, 2011
+
+# Milestone 1 - Redesign and document TokuFS
+# Total work days: 15 -> 3 weeks
+
+* Design metadata schema. This answers questions like: what metadata
+* should be stored? how it should it be formatted, where does it go?
+3 days - design
+2 days - document
+
+* Redesign file block data schema. Currently, each file has its own
+* fractal tree. This should change in favor of a single, unified data
+* block tree.
+3 days - design
+2 days - document
+
+* Finalize API. This requires the above work to be done and documented,
+* so that writing the updated API simply follows from the design.
+3 days - design
+2 days - document
+
+Projected completion date: 10/6/2011 [check] 
+
+# Milestone 2 - essential metadata implemented, file blocks on one tree.
+# Total work days: 35 -> 7 weeks
+
+* Implement essential API
+15 days - code
+15 days - debug, update tests, preliminary preformance measurements
+
+Projected completion date: 11/24/2011 [check] 
+
+# Milestone 3 - essential FUSE layer
+# Total work days: 10 -> 2 weeks
+
+* start FUSE layer, implementing the essentials
+5 days - code
+5 days - test
+
+Projected completion date: 12/8/2011 [check] 
+
+# Milestone 4 - Preliminary report
+# Total work days: 10 -> 2 weeks
+
+* Report
+5 days - compile data, documentation
+5 days - write it up
+
+Projected completion date: 12/22/2011
+
+######## Winter break #########
+
+# Milestone 5 - total metadata, total fuse layer
+# Total work days: 20 -> 4 weeks
+
+* Finish off functionality, optimize
+10 days - code
+10 days - run/debug
+
+# Milestone 5 - stress tests/coverage tests
+# Total work days: 10 -> 2 weeks
+
+* Develop a new black-box file system stress test
+5 days - code/run
+
+* Finish regression and coverage testing
+5 days - code/run
+
+# Milestone 5 - Analysis
+# Total work days: 20 -> 3 weeks
+
+* Measure "real-world" application performance
+5 days - benchmark
+
+* Measure microdata performance
+5 days - benchmark metadata
+5 days - benchmark microupdate
+
+# Milestone 6 - Final publication
+# Total work days: 20 -> 5 weeks
+
+* Compile figures, documentation, notes
+5 days - gather, write
+
+* Rough draft, outline
+10 days - compile, write
+
+* Polished draft
+10 days - write
+
+######## Summary #########
+
+Design              - 3 weeks
+Implementation      - 7 weeks
+FUSE                - 2 weeks
+Preliminary Report  - 2 weeks
+** Fall 2011        - 14 weeks total
+
+Full metadata       - 4 weeks
+Stress testing      - 2 weeks
+Analysis            - 3 weeks
+Final Report        - 5 weeks 
+** Spring 2012      - 14 weeks total
+

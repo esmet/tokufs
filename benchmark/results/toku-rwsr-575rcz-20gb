@@ -1,0 +1,80 @@
+File system benchmark
+invoked via: bin/benchmark-fs --random-write --serial-read -x 575 -n 37347540 -m 1950 -v -o toku-rwsr-575rcz-20gb 
+ * Hostname: coyote.tokutek.com
+ * Number of records: 37347540
+ * Record size: 575
+ * File size: 21474835500
+ * Compressibility: 1
+ * Target file name: dumpfile.fsbench
+ * Target file system: TokuFS
+ * Page size: 512
+ * Cache size: 1950 MB
+ * Underlying store: TokuDB
+ * Verbose? yes
+ * Benchmarking serial write? no
+ * Benchmarking random write? yes
+ * Benchmarking serial read? yes
+ * Benchmarking random read? no
+ * Output: toku-rwsr-575rcz-20gb
+Benchmarks starting: Thu Aug 25 17:57:45 2011
+-- benchmark_random_write: opening dumpfile.fsbench
+-- benchmark_random_write: done
+-- wrote 1073741775 bytes so far, throughput 29.132
+-- wrote 2147483550 bytes so far, throughput 17.730
+-- wrote 3221225325 bytes so far, throughput 12.719
+-- wrote 4294967100 bytes so far, throughput 9.777
+-- wrote 5368708875 bytes so far, throughput 8.418
+-- wrote 6442450650 bytes so far, throughput 7.910
+-- wrote 7516192425 bytes so far, throughput 7.701
+-- wrote 8589934200 bytes so far, throughput 7.085
+-- wrote 9663675975 bytes so far, throughput 6.505
+-- wrote 10737417750 bytes so far, throughput 6.074
+-- wrote 11811159525 bytes so far, throughput 5.766
+-- wrote 12884901300 bytes so far, throughput 5.605
+-- wrote 13958643075 bytes so far, throughput 5.503
+-- wrote 15032384850 bytes so far, throughput 5.418
+-- wrote 16106126625 bytes so far, throughput 5.329
+-- wrote 17179868400 bytes so far, throughput 5.219
+-- wrote 18253610175 bytes so far, throughput 5.085
+-- wrote 19327351950 bytes so far, throughput 4.949
+-- wrote 20401093725 bytes so far, throughput 4.826
+-- benchmark_random_write: closing dumpfile.fsbench
+-- benchmark_random_write: done
+-- benchmark_serial_read: opening dumpfile.fsbench
+-- benchmark_serial_read: done
+-- read 1073741775 bytes so far, throughput 26.683
+-- read 2147483550 bytes so far, throughput 24.404
+-- read 3221225325 bytes so far, throughput 22.600
+-- read 4294967100 bytes so far, throughput 21.761
+-- read 5368708875 bytes so far, throughput 21.328
+-- read 6442450650 bytes so far, throughput 21.115
+-- read 7516192425 bytes so far, throughput 20.902
+-- read 8589934200 bytes so far, throughput 20.722
+-- read 9663675975 bytes so far, throughput 20.614
+-- read 10737417750 bytes so far, throughput 20.535
+-- read 11811159525 bytes so far, throughput 20.451
+-- read 12884901300 bytes so far, throughput 20.343
+-- read 13958643075 bytes so far, throughput 20.238
+-- read 15032384850 bytes so far, throughput 20.161
+-- read 16106126625 bytes so far, throughput 20.121
+-- read 17179868400 bytes so far, throughput 20.074
+-- read 18253610175 bytes so far, throughput 20.022
+-- read 19327351950 bytes so far, throughput 20.008
+-- read 20401093725 bytes so far, throughput 19.959
+-- benchmark_serial_read: closing dumpfile.fsbench
+-- benchmark_serial_read: done
+Benchmarks completed: Thu Aug 25 19:32:14 2011
+Random write times:
+ * open:           135730
+ * io:             4545129869
+ * close:          17282411
+ * total:          4562659289
+ * io throughput:  4.724801 MB/s
+ * effective:      4.706649 MB/s
+Serial read times:
+ * open:           22343
+ * io:             1077315182
+ * close:          21348790
+ * total:          1098686408
+ * io throughput:  19.933661 MB/s
+ * effective:      19.545919 MB/s

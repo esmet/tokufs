@@ -1,0 +1,121 @@
+* Looks like we're able to intercept MPI IO calls destined for files of
+the form X:/path/to/file under ad_X even if that file system is not
+installed, or running, or mounted, or whatever. The calls go through.
+A simple hello world file system would consist of the operations struct
+defaulting to all generics except, say, open(). Instead, open would
+say hello world and then re-call generic open. Should try this to confirm.
+
+* Having trouble getting MPICH to compile with io romio flags. Maybe
+go to OpenMPI??
+
+* FIgure out how to patch MPI to have our own layer. Dealing with the existing
+ones is kind of annoying, and backwards. Would be nice to have ad_tokufs all
+shiney and nice.
+
+*** MPI IO ADIO layer patch laundry list ***
+
+diff -Naur original.c modified.c
+ 
+~~~~~~~~~~PREP PATCH~~~~~~~~~
+
+- romio/adio/common/ad_fstype.c:
+
+line 504:
+	Need to make sure ADIO recognizes the tokufs prefix in filenames
+	* add case for filename prefix "tokufs:" and "TOKUFS:"
+	* should do *fstype = ADIO_TOKUFS
+
+line 708:
+	Need to let ADIO grab the tokufs operations for tokufs files
+	* add case for file_system == ADIO_TOKUFS
+	* create an error code ifndef ROMIO_TOKUFS
+	* else set *ops = &ADIO_TOKUFS_operations
+
+- romio/adio/include/adio.h
+
+line 288:
+	Need a macro constant to represent ADIO TOKUFS
+	* #define ADIO_TOKUFS to be a unique integer among the rest
+
+- romio/adio/include/adioi_errmsg.h
+
+line 42:
+	When a file system is not recognized, tokufs should be added to
+	the list of valid file systems for ADIO. Add it to the message.
+	* add tokufs: into the fs type message, in alphabetical order
+
+line 52:
+	If tokufs was not configured into adio, an error should say so.
+	* add MPI_ERR_NO_TOKUFS "ROMIO has not been configured to use
+	the TokuFS file system"
+
+- romio/adio/include/adioi_fs_proto.h
+
+line 19:
+	Add a prototype for the tokufs op struct.
+	* add an extern struct ADIOI_Fns_struct ADIO_TOKUFS_operations
+	* add comment /* prototypes are in adio/ad_tokufs/ad_tokufs.h */
+	* wrap in ifdef ROMIO_TOKUFS
+
+- romio/adio/include/mpio_error.h
+
+line 52:
+	Make an identifier for the TokuFS error message
+	* add #define MPIR_ERR_NO_TOKUFS to be a unique integer
+
+- romio/adio/include/romioconf.h.in
+
+line 300:
+	Tell config how to define for TokuFS
+	* add comment /* define for ROMIO with TokuFS */
+	* add #undef ROMIO_TOKUFS
+
+- romio/configure.in
+
+line 100:
+	Let romio know about the existance of tokufs
+	* add tokufs to known_filesystems in alphabetical order
+
+line 1110:
+	More romio config stuff for tokufs
+	* add if test -n "$file_system_tokufs"; then AC_DEFINE(
+	ROMIO_TOKUFS,1,[Define for Romio with TokuFS]) ; fi
+
+line 2183:
+	Configure romio with the ad_tokufs makefile
+	* add adio/ad_tokufs/Makefile \ to the list of makefiles to use
+
+- romio/README
+
+line 1:
+	Talk about the addition of tokufs into this romio impl
+	* Add comment
+
+- romio/Makefile.in
+
+line 15:
+	Point the makefile to the ad_tokufs dir
+	* add adio/ad_tokufs to ALL_DIRS
+
+~~~~~~~~~~END PREP PATCH~~~~~~~~~~~~~~~~~~~~
+
+~~~~~~~~~~CODE PATCH~~~~~~~~~~~~~~~~~~~~~~~
+
+diff -Naur mpich.orig/src/mpi/romio/adio mpich.mod/src/mpi/romio/adio
+
+This should produce a tree diff between ours which has adio/ad_tokufs
+and the original which doesn't. Hopefully thats good enough for patch
+to just put those files in there and be done with it.
+
+* After doing a prep and code patch, we must run nuke old config files
+and run autoreconf at the top regenerate them based on changes.
+
+* The patching process therefore looks like:
+1.) tar xvf mpich.tar
+2.) cd mpich
+3.) patch -p1 < ../prep-tokufs-adio.patch
+4.) patch -p1 < ../tokufs-adio.patch
+5.) find . -name configure -print | xargs rm -f
+6.) maint/updatefiles
+7.) configure... make... install... etc
+

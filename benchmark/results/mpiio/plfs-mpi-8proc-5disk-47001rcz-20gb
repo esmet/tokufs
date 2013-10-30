@@ -1,0 +1,72 @@
+Input Parameters:
+I/O Testing type N -> 1: 2
+Total number of processors (N): 8
+Total number of I/O processors (M): 0
+Host Name List: None
+Number of circular buffers (-ahead): 0
+Number of objects (-nobj): 100000
+Number of bytes in each object (-size): 47001
+Circular buffer size (-csize): 0
+Preallocate file size (-preallocate): 0
+Check data read (-chkdata): 0
+Use collective read/write calls (-collective): 1
+Call MPI_Barrier before each write (-barrier): 0
+Flush data before file close (-sync): 0
+Strided data layout (-strided): 1
+Delete data file when done reading (-deletefile): 0
+Write output data to file (-nofile): 1
+Aggregators send data to themselves (-norsend): 1
+Test data written to (-target): plfs:/tokutek/esmet/plfs_mount/file
+Touch object option (-touch): 0
+MPI_WTIME_IS_GLOBAL: 3
+Timing results written to (-output): /home/esmet/plfs-8proc-5diskraid-47001rcz-20gb
+Errors and warnings written to (-errout): stderr
+
+Environment Variables (MPI):
+OMPI_MCA_orte_precondition_transports=d7c880904d7a4e33-41d8e71f3a75069d
+OMPI_MCA_orte_local_daemon_uri=4218880000.0;tcp://192.168.1.148:34943
+OMPI_MCA_orte_hnp_uri=4218880000.0;tcp://192.168.1.148:34943
+OMPI_MCA_mpi_yield_when_idle=0
+OMPI_MCA_orte_app_num=0
+OMPI_UNIVERSE_SIZE=1
+OMPI_MCA_ess=env
+OMPI_MCA_orte_ess_num_procs=8
+OMPI_COMM_WORLD_SIZE=8
+OMPI_COMM_WORLD_LOCAL_SIZE=8
+OMPI_MCA_orte_ess_jobid=4218880001
+OMPI_MCA_orte_ess_vpid=0
+OMPI_COMM_WORLD_RANK=0
+OMPI_COMM_WORLD_LOCAL_RANK=0
+
+MPI-IO TEST v1.00.021: Wed Aug 24 12:01:28 2011
+
+
+MPI_info 10 Hints Used (RANK 0):
+Key: cb_buffer_size = 16777216
+Key: romio_cb_read = automatic
+Key: romio_cb_write = automatic
+Key: cb_nodes = 1
+Key: romio_no_indep_rw = false
+Key: ind_rd_buffer_size = 4194304
+Key: ind_wr_buffer_size = 524288
+Key: romio_ds_read = automatic
+Key: romio_ds_write = automatic
+Key: cb_config_list = *:1
+=== Effective Bandwidth (min [rank] avg max [rank]): 3.421943e+02 [0] 3.423290e+02 3.423488e+02 [4] Mbytes/s.
+=== Total Time (min [rank] avg max [rank]): 1.047438e+02 [4] 1.047499e+02 1.047911e+02 [0] sec.
+=== Write Bandwidth (min [rank] avg max [rank]): 3.426476e+02 [1] 3.426477e+02 3.426479e+02 [4] Mbytes/s.
+=== Write Time (min [rank] avg max [rank]): 1.046524e+02 [4] 1.046524e+02 1.046525e+02 [1] sec.
+=== MPI_File_Write_Open Time (min [rank] avg max [rank]): 5.830884e-02 [5] 5.846328e-02 5.868697e-02 [0] sec.
+=== MPI_File_Write_Wait Time (min [rank] avg max [rank]): 0.000000e+00 [0] 0.000000e+00 0.000000e+00 [0] sec.
+=== MPI_File_Write_Preallocate_time Time (min [rank] avg max [rank]): 0.000000e+00 [0] 0.000000e+00 0.000000e+00 [0] sec.
+=== MPI_Write_File_Close_Wait Time (min [rank] avg max [rank]): 3.296614e-02 [4] 3.575164e-02 5.427408e-02 [0] sec.
+=== Completed MPI-IO Write.
+=== Effective Bandwidth (min [rank] avg max [rank]): 7.791873e+01 [3] 7.792350e+01 7.792903e+01 [1] Mbytes/s.
+=== Total Time (min [rank] avg max [rank]): 4.601484e+02 [1] 4.601811e+02 4.602092e+02 [3] sec.
+=== Read Bandwidth (min [rank] avg max [rank]): 7.869818e+01 [1] 7.869929e+01 7.870055e+01 [6] Mbytes/s.
+=== Read Time (min [rank] avg max [rank]): 4.556375e+02 [6] 4.556447e+02 4.556512e+02 [1] sec.
+=== MPI_File_Read_Open Time (min [rank] avg max [rank]): 4.295003e+00 [0] 4.296033e+00 4.297255e+00 [4] sec.
+=== MPI_File_Read_Wait Time (min [rank] avg max [rank]): 0.000000e+00 [0] 0.000000e+00 0.000000e+00 [0] sec.
+=== MPI_File_Read_Preallocate_time Time (min [rank] avg max [rank]): 0.000000e+00 [0] 0.000000e+00 0.000000e+00 [0] sec.
+=== MPI_Read_File_Close_Wait Time (min [rank] avg max [rank]): 1.402941e-01 [1] 1.782687e-01 2.084479e-01 [3] sec.
+=== Completed MPI-IO Read.

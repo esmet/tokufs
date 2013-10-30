@@ -1,0 +1,23 @@
+Insertions of 1048576 per batch
+random 18.318624s    57241/s    cumulative 18.318628s    57241/s
+random 25.510798s    41103/s    cumulative 43.829502s    47848/s
+random 29.503653s    35541/s    cumulative 73.333214s    42896/s
+random 32.645542s    32120/s    cumulative 105.978813s    39577/s
+random 33.070892s    31707/s    cumulative 139.049759s    37705/s
+random 62.971909s    16651/s    cumulative 202.021729s    31142/s
+random 85.901810s    12207/s    cumulative 287.923584s    25493/s
+random 96.574631s    10858/s    cumulative 384.498444s    21817/s
+random 106.063354s     9886/s    cumulative 490.561859s    19238/s
+random 109.244621s     9598/s    cumulative 599.806519s    17482/s
+random 111.891495s     9371/s    cumulative 711.698120s    16207/s
+random 116.675545s     8987/s    cumulative 828.373840s    15190/s
+random 122.996574s     8525/s    cumulative 951.370483s    14328/s
+random 126.535660s     8287/s    cumulative 1077.906250s    13619/s
+random 127.994987s     8192/s    cumulative 1205.901367s    13043/s
+random 132.646332s     7905/s    cumulative 1338.547729s    12534/s
+random 131.154221s     7995/s    cumulative 1469.702026s    12129/s
+random 145.312408s     7216/s    cumulative 1615.014526s    11687/s
+random 150.029556s     6989/s    cumulative 1765.044067s    11288/s
+random 149.955963s     6993/s    cumulative 1915.000122s    10951/s
+Shutdown  6.347383s
+Total time 1921.347534s for 20971520 insertions =    10915/s

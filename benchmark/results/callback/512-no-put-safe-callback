@@ -1,0 +1,55 @@
+File system benchmark
+invoked via: bin/benchmark-fs --serial-write --serial-read -x 512 -n 25000000 -v -o 512-no-put-safe-callback 
+ * pid: 22761
+ * Hostname: coyote.tokutek.com
+ * Number of records: 25000000
+ * Record size: 512
+ * File size: 12800000000
+ * Compressibility: 1
+ * Target file name: dumpfile.fsbench
+ * Target file system: TokuFS
+ * Page size: 512
+ * Cache size: 128 MB
+ * Underlying store: TokuDB
+ * Verbose? yes
+ * Benchmarking serial write? yes
+ * Benchmarking random write? no
+ * Benchmarking serial read? yes
+ * Benchmarking random read? no
+ * Output: 512-no-put-safe-callback
+Benchmarks starting: Fri Sep  2 12:06:07 2011
+-- benchmark_serial_write: opening dumpfile.fsbench
+-- benchmark_serial_write: done
+-- wrote 640000000 bytes so far, throughput 78.100
+-- wrote 1280000000 bytes so far, throughput 75.058
+-- wrote 1920000000 bytes so far, throughput 74.146
+-- wrote 2560000000 bytes so far, throughput 72.772
+-- wrote 3200000000 bytes so far, throughput 71.600
+-- wrote 3840000000 bytes so far, throughput 70.666
+-- wrote 4480000000 bytes so far, throughput 69.781
+-- wrote 5120000000 bytes so far, throughput 69.205
+-- wrote 5760000000 bytes so far, throughput 68.756
+-- wrote 6400000000 bytes so far, throughput 68.389
+-- wrote 7040000000 bytes so far, throughput 68.098
+-- wrote 7680000000 bytes so far, throughput 67.912
+-- wrote 8320000000 bytes so far, throughput 67.751
+-- wrote 8960000000 bytes so far, throughput 67.537
+-- wrote 9600000000 bytes so far, throughput 67.275
+-- wrote 10240000000 bytes so far, throughput 67.144
+-- wrote 10880000000 bytes so far, throughput 67.037
+-- wrote 11520000000 bytes so far, throughput 66.805
+-- wrote 12160000000 bytes so far, throughput 66.669
+-- benchmark_serial_write: closing dumpfile.fsbench
+-- benchmark_serial_write: done
+-- benchmark_serial_read: opening dumpfile.fsbench
+-- benchmark_serial_read: done
+-- read 640000000 bytes so far, throughput 51.826
+-- read 1280000000 bytes so far, throughput 51.933
+-- read 1920000000 bytes so far, throughput 51.827
+-- read 2560000000 bytes so far, throughput 51.862
+-- read 3200000000 bytes so far, throughput 51.804
+-- read 3840000000 bytes so far, throughput 51.716
+-- read 4480000000 bytes so far, throughput 51.700
+-- read 5120000000 bytes so far, throughput 51.609
+-- read 5760000000 bytes so far, throughput 51.555
+-- read 6400000000 bytes so far, throughput 51.490

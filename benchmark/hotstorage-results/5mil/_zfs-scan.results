@@ -1,0 +1,52 @@
+reporting 20 intervals of throughput progress for a one file benchmark
+filesystem benchmark
+invoked via: /mnt/xfs/tokufs/benchmark/benchmark-fs-threaded --dir=/zfs/microfile-bucket.1330724913 --scan -u 
+ * dir: /zfs/microfile-bucket.1330724913
+ * started: Mon Mar  5 13:12:29 2012
+ * pid: 1494
+ * hostname: justice
+ * file op interface: posix
+ * num files: 1
+ * max children: 100
+ * num threads: 1
+ * num operations: 1
+ * IO type: pwrite
+ * IO pattern: serial
+ * size of each IO op: 512
+ * size of each file: 512
+ * filesystem pagesize: 4096
+ * cachesize: 0 MB
+ * verbose? no
+ * report progress? yes
+Scanning the entire directory tree, counting children, total size
+* progress: scanned 12000 files in 66568258 usec, 180.266096 files/second
+* progress: scanned 30000 files in 133601274 usec, 224.548757 files/second
+* progress: scanned 48000 files in 196970084 usec, 243.691829 files/second
+* progress: scanned 66000 files in 258628342 usec, 255.192449 files/second
+* progress: scanned 84000 files in 321368784 usec, 261.381952 files/second
+* progress: scanned 102000 files in 383413003 usec, 266.031666 files/second
+* progress: scanned 122000 files in 450024164 usec, 271.096554 files/second
+* progress: scanned 140000 files in 511393192 usec, 273.761955 files/second
+* progress: scanned 160000 files in 576466806 usec, 277.552841 files/second
+* progress: scanned 180000 files in 640391838 usec, 281.077911 files/second
+* progress: scanned 200000 files in 703686123 usec, 284.217627 files/second
+* progress: scanned 220000 files in 767316124 usec, 286.713641 files/second
+* progress: scanned 240000 files in 830658933 usec, 288.927249 files/second
+* progress: scanned 260000 files in 893967559 usec, 290.838294 files/second
+* progress: scanned 280000 files in 957730297 usec, 292.357881 files/second
+* progress: scanned 300000 files in 1022396422 usec, 293.428257 files/second
+* progress: scanned 320000 files in 1085256174 usec, 294.861257 files/second
+* progress: scanned 340000 files in 1148516405 usec, 296.034082 files/second
+* progress: scanned 360000 files in 1212425879 usec, 296.925368 files/second
+* progress: scanned 380000 files in 1276119834 usec, 297.777677 files/second
+* progress: scanned 400000 files in 1339531842 usec, 298.611789 files/second
+* progress: scanned 420000 files in 1404154914 usec, 299.112296 files/second
+* progress: scanned 440000 files in 1468044045 usec, 299.718528 files/second
+* progress: scanned 460000 files in 1532266923 usec, 300.208791 files/second
+* progress: scanned 480000 files in 1596407192 usec, 300.675168 files/second
+* progress: scanned 500000 files in 1660242280 usec, 301.160864 files/second
+* progress: scanned 520000 files in 1724249813 usec, 301.580430 files/second
+* progress: scanned 540000 files in 1788449889 usec, 301.937451 files/second
+* progress: scanned 560000 files in 1851972851 usec, 302.380243 files/second
+* progress: scanned 580000 files in 1915229928 usec, 302.835702 files/second
+* progress: scanned 600000 files in 1978621483 usec, 303.241426 files/second

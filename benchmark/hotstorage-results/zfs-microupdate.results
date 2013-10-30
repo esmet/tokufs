@@ -1,0 +1,22 @@
+File system benchmark
+invoked via: ./benchmark-fs --compressibility 2 --random-write --serial-read -x 575 -n 18500000 -v -m 2048 -u 
+ * pid: 5638
+ * Hostname: justice
+ * Number of records: 18500000
+ * Record size: 575
+ * File size: 10637500000
+ * Compressibility: 2
+ * Target file name: dumpfile
+ * Target file system: ufs
+ * Page size: 4096
+ * Verbose? yes
+ * Benchmarking serial write? no
+ * Benchmarking random write? yes
+ * Benchmarking serial read? yes
+ * Benchmarking random read? no
+ * Output: stdout
+Benchmarks starting: Thu Mar  8 03:23:51 2012
+-- benchmark_random_write: opening dumpfile
+-- benchmark_random_write: done
+-- wrote 531875000 bytes so far, throughput 0.033
+-- wrote 1063750000 bytes so far, throughput 0.032

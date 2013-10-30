@@ -1,0 +1,49 @@
+\documentclass[12pt] {article}
+
+\begin {document}
+\title {TokuFS: A streaming B-tree based filesystem}
+\author {John Esmet}
+
+\maketitle
+
+\abstract {
+TokuFS is a fragmentation-free, microdata optimized file system.
+}
+
+\section* {Introduction}
+File systems suck at random writes. TokuFS does not. Random writes
+are not uncommon. Consider many processes writing out different
+files concurrently. Normal file systems will either write out
+the data by offset as the requests come in, which means random IO,
+or they write out the blocks where the disk head is currently,
+resulting in fragmentation for at least one party. Neither
+are optimal.
+
+\section* {Design overview}
+
+TokuDB is used as the underlying storage system, with one database for 
+metadata and one for file data. The block database uses the file path as the
+beginning of its key with the block number as the last part, which means
+datablocks for a single file are sorted in order. Both metadata and blocks
+are stored in \emph{level order}, which means files and directories sharing 
+a parent are adjacent. Reading a directories contents are always fast, no
+matter how many entries the directory has. Similarly, reading a file
+sequentially is always fast, no matter how conjested the file system is
+or how the datablocks were written out, or if other files were written
+concurrently.
+
+\section* {Preliminary results}
+
+A benchmark in which 30GB of file data was written out in random 575 byte
+segments shows a 160x speedup over a traditional file system such as XFS.
+
+\section* {Known issues and future work}
+
+Because of the invariant that datablocks are never fragmented, it is necessary
+to move an entire subtree of data when a directory is renamed. Even those
+deletes are fast in TokuDB, it is still an overwhelming amount of data to 
+delete for something as simple as a directory rename. TokuDB may support
+broadcast key updates or O(1) subtree swaps in the future, solving this
+issue gracefully.
+
+\end {document}

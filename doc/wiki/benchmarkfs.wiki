@@ -1,0 +1,48 @@
+    benchmark-fs is a generalized file system benchmark which
+measure file data operation workloads which can be described as
+a set of N operations each of size R. These workloads include:
+
+    - Serial read
+    Perform N read operations of size R serially accross the file.
+    - Serial write
+    Perform N write operations of size R serially accross the file
+    - Random read
+    Randomly read N records of size R from the file, so that each
+    record from the file is read exactly once.
+    - Random write
+    Randomly write N records of size R to the file, so that each
+    write collectively fills the file with no gaps or overlap.
+
+For each workload chosen (as few as one can be run, as many as all),
+benchmark-fs will measure file open time, file IO time, and file close
+time. IO throughput and effective throughput is calculated from these
+figures and presented in megabytes per second. To account for kernel
+page caching, benchmark-fs can be given an option to attempt to drop
+caches before each run using /proc magic.
+
+    Because benchmark-fs was intended to compare file systems under
+similar workloads, the code is designed to flexible allow for
+different file systems to hook up to a template benchmark through
+a benchmark_file structure interface. At the time of this writing,
+it's functionality includes (not surprisingly)
+    - open
+    - close
+    - write_at
+    - read_at
+Each benchmark function takes this structure as a parameter, and
+uses its functions in the benchmark. Thus, all that is required of
+benchmarking a new file system is to provide a structure with
+these functions.
+
+It would not be wise to attempt to illustrate all of the options
+to benchmark-fs in this document, because it is bound to become
+obsolete soon and it would be a pain to keep this up to date. Instead,
+run benchmark-fs with --help and the usage is nicely spelled out.
+
+    benchmark-fs was written with file data intensive workloads in
+mind. That being said, it is not useful for measuring metadata 
+intensive workloads such as massive file creation, deletion, etc.
+It is not clear whether or not it makes sense to fork off benchmark-fs
+and write a seperate meta-data intensive benchmark or to just
+extend benchmark-fs. At either rate, these workloads will be measurable
+in the planned future.

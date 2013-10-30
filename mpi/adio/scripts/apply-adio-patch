@@ -1,0 +1,10 @@
+#!/bin/bash
+
+ROOT_DIR=$HOME/tokufs
+
+if [ ! -e $ROOT_DIR/mpich2 ] ; then
+	echo "No mpich2 src tree found, extract one first before patching"
+	exit 1
+fi
+
+/bin/cp -rf $ROOT_DIR/adio/ad_tokufs $ROOT_DIR/mpich2/src/mpi/romio/adio

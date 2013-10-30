@@ -1,0 +1,221 @@
+filesystem benchmark
+invoked via: ./benchmark-fs-threaded --files 2000000 -d 128 --iosize 200 --operations 1 -u --threads 4 --dir /zfs/microfile-bucket.1330549174 
+ * dir: /zfs/microfile-bucket.1330549174
+ * started: Wed Feb 29 15:59:35 2012
+ * pid: 25432
+ * hostname: justice
+ * file op interface: posix
+ * num files: 2000000
+ * max children: 128
+ * num threads: 4
+ * num operations: 1
+ * IO type: pwrite
+ * IO pattern: serial
+ * size of each IO op: 200
+ * size of each file: 200
+ * filesystem pagesize: 4096
+ * cachesize: 0 MB
+ * verbose? no
+ * report progress? no
+opening parent /zfs/microfile-bucket.1330549174
+created directory structure with 15744 leaves
+waiting for work to finish...
+* progress: 10000 files, 787.278586 files/sec
+* progress: 20000 files, 1453.275873 files/sec
+* progress: 30000 files, 2061.643980 files/sec
+* progress: 40000 files, 2554.272871 files/sec
+* progress: 50000 files, 1930.586683 files/sec
+* progress: 60000 files, 2309.553986 files/sec
+* progress: 70000 files, 2506.655080 files/sec
+* progress: 80000 files, 2769.176600 files/sec
+* progress: 90000 files, 2260.880601 files/sec
+* progress: 100000 files, 2489.071483 files/sec
+* progress: 110000 files, 2374.197481 files/sec
+* progress: 120000 files, 2423.204754 files/sec
+* progress: 130000 files, 1946.557270 files/sec
+* progress: 140000 files, 2068.810132 files/sec
+* progress: 150000 files, 2032.787177 files/sec
+* progress: 160000 files, 2136.065190 files/sec
+* progress: 170000 files, 1713.564905 files/sec
+* progress: 180000 files, 1809.211492 files/sec
+* progress: 190000 files, 1892.568960 files/sec
+* progress: 200000 files, 1891.649566 files/sec
+* progress: 210000 files, 1632.729896 files/sec
+* progress: 220000 files, 1690.915055 files/sec
+* progress: 230000 files, 1738.489304 files/sec
+* progress: 240000 files, 1778.135934 files/sec
+* progress: 250000 files, 1659.253344 files/sec
+* progress: 260000 files, 1719.032257 files/sec
+* progress: 270000 files, 1775.325567 files/sec
+* progress: 280000 files, 1816.415543 files/sec
+* progress: 290000 files, 1674.579730 files/sec
+* progress: 300000 files, 1707.066132 files/sec
+* progress: 310000 files, 1741.428348 files/sec
+* progress: 320000 files, 1744.313996 files/sec
+* progress: 330000 files, 1602.843269 files/sec
+* progress: 340000 files, 1624.256688 files/sec
+* progress: 350000 files, 1646.823208 files/sec
+* progress: 360000 files, 1626.469130 files/sec
+* progress: 370000 files, 1446.654894 files/sec
+* progress: 380000 files, 1460.248635 files/sec
+* progress: 390000 files, 1488.440780 files/sec
+* progress: 400000 files, 1472.728917 files/sec
+* progress: 410000 files, 1306.908710 files/sec
+* progress: 420000 files, 1290.577592 files/sec
+* progress: 430000 files, 1302.642431 files/sec
+* progress: 440000 files, 1287.290404 files/sec
+* progress: 450000 files, 1164.911580 files/sec
+* progress: 460000 files, 1157.282472 files/sec
+* progress: 470000 files, 1158.206007 files/sec
+* progress: 480000 files, 1165.245832 files/sec
+* progress: 490000 files, 1136.316679 files/sec
+* progress: 500000 files, 1078.889557 files/sec
+* progress: 510000 files, 1089.078293 files/sec
+* progress: 520000 files, 1093.942343 files/sec
+* progress: 530000 files, 1086.492452 files/sec
+* progress: 540000 files, 1100.546362 files/sec
+* progress: 550000 files, 1119.064904 files/sec
+* progress: 560000 files, 1129.067337 files/sec
+* progress: 570000 files, 1122.145332 files/sec
+* progress: 580000 files, 1123.110131 files/sec
+* progress: 590000 files, 1139.486655 files/sec
+* progress: 600000 files, 1154.197805 files/sec
+* progress: 610000 files, 1075.255284 files/sec
+* progress: 620000 files, 1091.932547 files/sec
+* progress: 630000 files, 1010.733677 files/sec
+* progress: 640000 files, 1014.300538 files/sec
+* progress: 650000 files, 955.376039 files/sec
+* progress: 660000 files, 969.340860 files/sec
+* progress: 670000 files, 874.303940 files/sec
+* progress: 680000 files, 879.720843 files/sec
+* progress: 690000 files, 849.134832 files/sec
+* progress: 700000 files, 861.097424 files/sec
+* progress: 710000 files, 834.214511 files/sec
+* progress: 720000 files, 836.648877 files/sec
+* progress: 730000 files, 801.269932 files/sec
+* progress: 740000 files, 811.812985 files/sec
+* progress: 750000 files, 783.509733 files/sec
+* progress: 760000 files, 785.216569 files/sec
+* progress: 770000 files, 753.105519 files/sec
+* progress: 780000 files, 762.339761 files/sec
+* progress: 790000 files, 747.155922 files/sec
+* progress: 800000 files, 752.614581 files/sec
+* progress: 810000 files, 753.768341 files/sec
+* progress: 820000 files, 758.477206 files/sec
+* progress: 830000 files, 765.886712 files/sec
+* progress: 840000 files, 774.964598 files/sec
+* progress: 850000 files, 765.925251 files/sec
+* progress: 860000 files, 773.907602 files/sec
+* progress: 870000 files, 781.996424 files/sec
+* progress: 880000 files, 788.436478 files/sec
+* progress: 890000 files, 790.634909 files/sec
+* progress: 900000 files, 798.301837 files/sec
+* progress: 910000 files, 804.781442 files/sec
+* progress: 920000 files, 810.044311 files/sec
+* progress: 930000 files, 810.363587 files/sec
+* progress: 940000 files, 819.049347 files/sec
+* progress: 950000 files, 826.867130 files/sec
+* progress: 960000 files, 829.256122 files/sec
+* progress: 970000 files, 827.814167 files/sec
+* progress: 980000 files, 836.320375 files/sec
+* progress: 990000 files, 843.250622 files/sec
+* progress: 1000000 files, 848.791215 files/sec
+* progress: 1010000 files, 847.247187 files/sec
+* progress: 1020000 files, 852.139217 files/sec
+* progress: 1030000 files, 858.574294 files/sec
+* progress: 1040000 files, 863.637148 files/sec
+* progress: 1050000 files, 864.968394 files/sec
+* progress: 1060000 files, 866.794375 files/sec
+* progress: 1070000 files, 873.422069 files/sec
+* progress: 1080000 files, 877.192658 files/sec
+* progress: 1090000 files, 875.632188 files/sec
+* progress: 1100000 files, 880.624061 files/sec
+* progress: 1110000 files, 886.961064 files/sec
+* progress: 1120000 files, 888.907526 files/sec
+* progress: 1130000 files, 884.418631 files/sec
+* progress: 1140000 files, 892.046895 files/sec
+* progress: 1150000 files, 898.670320 files/sec
+* progress: 1160000 files, 899.755743 files/sec
+* progress: 1170000 files, 904.322870 files/sec
+* progress: 1180000 files, 911.586209 files/sec
+* progress: 1190000 files, 919.024879 files/sec
+* progress: 1200000 files, 919.424603 files/sec
+* progress: 1210000 files, 926.759302 files/sec
+* progress: 1220000 files, 934.282690 files/sec
+* progress: 1230000 files, 939.658836 files/sec
+* progress: 1240000 files, 919.084790 files/sec
+* progress: 1250000 files, 921.141215 files/sec
+* progress: 1260000 files, 928.336114 files/sec
+* progress: 1270000 files, 931.938088 files/sec
+* progress: 1280000 files, 907.454286 files/sec
+* progress: 1290000 files, 905.156746 files/sec
+* progress: 1300000 files, 911.126309 files/sec
+* progress: 1310000 files, 909.433857 files/sec
+* progress: 1320000 files, 860.588788 files/sec
+* progress: 1330000 files, 857.857589 files/sec
+* progress: 1340000 files, 862.003732 files/sec
+* progress: 1350000 files, 857.912999 files/sec
+* progress: 1360000 files, 792.152367 files/sec
+* progress: 1370000 files, 782.974358 files/sec
+* progress: 1380000 files, 786.842497 files/sec
+* progress: 1390000 files, 780.555083 files/sec
+* progress: 1400000 files, 723.402507 files/sec
+* progress: 1410000 files, 721.221193 files/sec
+* progress: 1420000 files, 724.868516 files/sec
+* progress: 1430000 files, 725.863522 files/sec
+* progress: 1440000 files, 714.672094 files/sec
+* progress: 1450000 files, 719.408200 files/sec
+* progress: 1460000 files, 723.903747 files/sec
+* progress: 1470000 files, 728.418073 files/sec
+* progress: 1480000 files, 729.065157 files/sec
+* progress: 1490000 files, 733.440202 files/sec
+* progress: 1500000 files, 738.024797 files/sec
+* progress: 1510000 files, 742.366468 files/sec
+* progress: 1520000 files, 745.784431 files/sec
+* progress: 1530000 files, 750.662199 files/sec
+* progress: 1540000 files, 754.983557 files/sec
+* progress: 1550000 files, 758.880307 files/sec
+* progress: 1560000 files, 763.012956 files/sec
+* progress: 1570000 files, 762.486618 files/sec
+* progress: 1580000 files, 765.324264 files/sec
+* progress: 1590000 files, 767.580072 files/sec
+* progress: 1600000 files, 768.231601 files/sec
+* progress: 1610000 files, 769.915270 files/sec
+* progress: 1620000 files, 773.885056 files/sec
+* progress: 1630000 files, 776.644810 files/sec
+* progress: 1640000 files, 777.828985 files/sec
+* progress: 1650000 files, 779.133927 files/sec
+* progress: 1660000 files, 781.470459 files/sec
+* progress: 1670000 files, 784.454917 files/sec
+* progress: 1680000 files, 785.314656 files/sec
+* progress: 1690000 files, 786.996668 files/sec
+* progress: 1700000 files, 789.221907 files/sec
+* progress: 1710000 files, 792.414301 files/sec
+* progress: 1720000 files, 789.888460 files/sec
+* progress: 1730000 files, 790.023993 files/sec
+* progress: 1740000 files, 794.117665 files/sec
+* progress: 1750000 files, 797.124032 files/sec
+* progress: 1760000 files, 800.992143 files/sec
+* progress: 1770000 files, 804.142423 files/sec
+* progress: 1780000 files, 808.243159 files/sec
+* progress: 1790000 files, 812.043262 files/sec
+* progress: 1800000 files, 814.872781 files/sec
+* progress: 1810000 files, 817.138456 files/sec
+* progress: 1820000 files, 821.250776 files/sec
+* progress: 1830000 files, 825.214743 files/sec
+* progress: 1840000 files, 828.848172 files/sec
+* progress: 1850000 files, 831.704793 files/sec
+* progress: 1860000 files, 834.748722 files/sec
+* progress: 1870000 files, 837.675686 files/sec
+* progress: 1880000 files, 842.026291 files/sec
+* progress: 1890000 files, 826.732395 files/sec
+* progress: 1900000 files, 828.322589 files/sec
+* progress: 1910000 files, 831.238684 files/sec
+* progress: 1920000 files, 834.071200 files/sec
+* progress: 1930000 files, 805.576335 files/sec
+* progress: 1940000 files, 804.494738 files/sec
+* progress: 1950000 files, 803.768681 files/sec
+* progress: 1960000 files, 805.767524 files/sec
+finished: time 2625166126 usec
+2000000 files, 761.856547 files/sec
+throughput: 0.152371 MB/sec

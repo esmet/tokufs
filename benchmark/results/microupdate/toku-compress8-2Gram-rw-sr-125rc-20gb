@@ -1,0 +1,62 @@
+File system benchmark
+invoked via: bin/benchmark-fs --random-write --serial-read -x 125 -n 171798680 -v --compressibility 8 -o /res/users/esmet/toku-compress8-rw-sr-125rc-20gb 
+    * Hostname: tall2.rutgers.edu
+    * Number of records: 171798680
+    * Record size: 125
+    * File size: 21474835000
+    * Compressibility: 8
+    * Target file name: ./dumpfile.fsbench
+    * Target file system: tokufs
+    * Page size: 512
+    * Cache size: 2147483648
+    * Underlying store: TokuDB
+    * Verbose? yes
+    * Benchmarking serial write? no
+    * Benchmarking random write? yes
+    * Benchmarking serial read? yes
+    * Benchmarking random read? no
+    * Output: /res/users/esmet/toku-compress8-rw-sr-125rc-20gb
+benchmark_random_write: opened ./dumpfile.fsbench
+wrote 1073741750 bytes so far, throughput 15.231
+wrote 2147483500 bytes so far, throughput 13.419
+wrote 3221225250 bytes so far, throughput 12.718
+wrote 4294967000 bytes so far, throughput 12.248
+wrote 5368708750 bytes so far, throughput 11.502
+wrote 6442450500 bytes so far, throughput 11.376
+wrote 7516192250 bytes so far, throughput 11.146
+wrote 8589934000 bytes so far, throughput 11.048
+wrote 9663675750 bytes so far, throughput 10.957
+wrote 10737417500 bytes so far, throughput 10.772
+wrote 11811159250 bytes so far, throughput 10.577
+wrote 12884901000 bytes so far, throughput 10.405
+wrote 13958642750 bytes so far, throughput 10.263
+wrote 15032384500 bytes so far, throughput 10.128
+wrote 16106126250 bytes so far, throughput 10.026
+wrote 17179868000 bytes so far, throughput 9.937
+wrote 18253609750 bytes so far, throughput 9.856
+wrote 19327351500 bytes so far, throughput 9.792
+wrote 20401093250 bytes so far, throughput 9.739
+benchmark_serial_read: opened ./dumpfile.fsbench
+read 1073741750 bytes so far, throughput 33.279
+read 2147483500 bytes so far, throughput 32.161
+read 3221225250 bytes so far, throughput 31.393
+read 4294967000 bytes so far, throughput 30.812
+read 5368708750 bytes so far, throughput 30.729
+read 6442450500 bytes so far, throughput 30.540
+read 7516192250 bytes so far, throughput 30.393
+read 8589934000 bytes so far, throughput 30.223
+read 9663675750 bytes so far, throughput 30.164
+read 10737417500 bytes so far, throughput 30.188
+read 11811159250 bytes so far, throughput 30.148
+read 12884901000 bytes so far, throughput 30.147
+read 13958642750 bytes so far, throughput 30.034
+read 15032384500 bytes so far, throughput 30.033
+read 16106126250 bytes so far, throughput 30.064
+read 17179868000 bytes so far, throughput 30.038
+read 18253609750 bytes so far, throughput 30.055
+read 19327351500 bytes so far, throughput 30.078
+read 20401093250 bytes so far, throughput 30.059
+Benchmark complete.
+Results:
+    * Random write: 9.704 Mb/s
+    * Serial read: 30.059 Mb/s

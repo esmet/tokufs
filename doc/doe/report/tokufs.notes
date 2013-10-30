@@ -1,0 +1,122 @@
+                    TokuFS - A Fractal Tree File System
+
+** Outline **
+
+    ~ What we're good at / What we solved ~
+
+Random microupdates:
+- Rapidly updating out-of-core microdata
+- Does not cause performance degrading fragmentation. 
+Because:
+- Data does not need to be in memory to be updated. CPU and memory are
+  utilized to leverage the memory hierachy efficiently.
+- IOs are large (2+ MB), thus a system's IOPS are used efficiently.
+  Even if logically sequential IOs are not physically adjacent on disk,
+  sequential read performance will not suffer because each IO consists
+  of a large amount of data, therefore hiding the cost of disk seeks.
+Evidence:
+- Microupdate benchmark comparing TokuFS, ext3, and TokuFS+Btree. The
+  TokuFS+Btree run proves that the magic of TokuFS lies in TokuDB,
+  and the ext3 plus accompanying iostat graphs proves the traditional
+  file system's inability to cope with rapid random upserts.
+- Btrees are unusable, TokuFS fractal trees provide usuable, predictable
+  performance as the data grows.
+
+    ~ What we didn't necessarily solve ~
+
+N-1 parallel checkpoints in MPIIO:
+- This workload was problematic for parallel file systems because
+  small writes occurring in parallel on a shared file block are
+  serialized due to file system locking mechanisms. Typically,
+  the locking granularity is at the block level, and if blocks are
+  larger than the writes, the number of writes which fit into a block
+  cannot occur in parallel and performance is lost.
+- One solution is to translate N processes writing to one file into
+  N processes writing to N files, therefor removing all lock contention
+  in light of the fact that there are no shared regions among writers.
+  No sharing, no locking, no inadverant serialization. This is what
+  PLFS did, and their results are good. 
+- One problem they have is that reads on a file require the 
+  aggregation of N indicies into a big index, which then maps file
+  blocks to real blocks. This index is not clustered, however, so
+  randomly written data to each index can incur random IO on a disk
+  to recover the actual data. 
+- This problem does not affect the N-1 workload in the usual case, 
+  where each process writes out monotonically increasing offsets 
+  and reads it back in the same way.
+
+- TokuFS took a similar approach to this problem, by translating
+  the workload into N files, each its own fractal tree index. This
+  is the only way we can do it, because fractal trees, as they
+  are currently implemented, are limited to ONE process at a time.
+  The result is N writers on N fractal trees, typically writing to
+  increasing offsets (ie: serial insertions) and then reading it
+  back the same way (ie: serial reads). As far as I know, this is
+  NOT where TokuFS/TokuDB was meant to out perform B-trees or
+  non clustered log based indicies.
+- Given a scenario where there are as many disks as there are writers,
+  there should be no reason for TokuFS to outperform a Btree or
+  PLFS in the N-1 parallel write workload as described. I did not have
+  the resources to test this hypothesis, however.
+
+- The one saving quality we can extract from this scenario is that
+  TokuFS does indeed outperform PLFS in a scenario where there are
+  FEWER disks than writers. In the case of testing over top of xfs,
+  a log based local file system, PLFS's parallel writers wrote small
+  chunks of data in each IO, causing fragmentation during reads.
+  TokuFS on the otherhand only went to disk with big IOs, so reads
+  did not suffer. It's important to note that this is NOT the kind
+  of issue or scenario that PLFS tries to solve directly. It is merely
+  a consequence of the fact that the underlying file system did log
+  based writes, and PLFS did small writes, so there was fragmentation,
+  something a fractal tree index was able to avoid.
+
+    ~ What we're bad at ~
+
+Nothing:
+  Workloads that traditional file systems excel at will be
+  a constant factor slower, but there are no worst case scenarios
+  where we are unusably slow.
+
+----------------------------------------------------------------------
+
+- intro. what is a fractal tree, how does it work?
+talk about tokudb, and how it was leveraged into the 
+storage engine for a file system.
+
+[Introduction]
+
+    File systems have traditionally been implemented using a B-tree style
+index, which performs well for applications doing large, aligned, and 
+sequential IO. The data structure is designed to write data into its
+final location the first time an update occurs, which means writes with
+good locality tend to require optimally few disk IOs. The drawback is
+in the opposite scenario, when writes have poor locality and thus require
+many disk IOs. 
+
+[Microupdate]
+
+- definition of problem, microupdate, N-1 checkpoint in MPI IO.
+
+    A particularly troublesome workload for traditional
+file systems involves rapid updates of "microdata" spread randomly over
+disk. This workload will be referred to as "microupdate", where 
+"microdata" will be defined as any data, metadata or file data, that 
+requires negligable disk bandwidth to write compared to the worst 
+case seek time required if it is not in memory. 
+
+- describe the state of the art, PLFS’s append to file data structure, Btrees.
+
+- problems with the state of the art, non clustered index of offset/data pairs in plfs causes random I/O and poor read performance. random writes to a Btree do the same.
+
+- proposed alternative is to use a fractal tree to index data blocks, efficient even if they are random, and read faster than append-to-file structures.
+
+- why does it work? fractal trees do not fragment, use IOPS efficiently by only going to disk when enough work is needed to be done to amortize the costs.
+
+evidence:
+
+- microupdate benchmark results fractal tree vs btree
+- N-1 MPIIO benchmark comparing 8 processes sharing one disk using fractal trees vs PLFS append-to-file structures. Shows that fractal trees can still perform well in scenarios where IOPS are at a premium, and that other structures which perform small writes don’t have the same kind of efficienty in this environment.
+- Random offset write MPIIO benchmark using IOR, show that fractal trees can index highly random writes with good performance, and read them back with good performance, while PLFS can write them out at peak performance, but is nearly incapable of reading it back.
+- iostat output for each benchmark to help solidify claims that IOPS are being used efficiently by fractal trees and poorly by others.
+

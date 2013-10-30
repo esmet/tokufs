@@ -1,0 +1,64 @@
+Input Parameters:
+I/O Testing type N -> 1: 2
+Total number of processors (N): 8
+Total number of I/O processors (M): 0
+Host Name List: None
+Number of circular buffers (-ahead): 0
+Number of objects (-nobj): 57000
+Number of bytes in each object (-size): 47001
+Circular buffer size (-csize): 0
+Preallocate file size (-preallocate): 0
+Check data read (-chkdata): 0
+Use collective read/write calls (-collective): 1
+Call MPI_Barrier before each write (-barrier): 0
+Flush data before file close (-sync): 0
+Strided data layout (-strided): 1
+Delete data file when done reading (-deletefile): 0
+Write output data to file (-nofile): 1
+Aggregators send data to themselves (-norsend): 1
+Test data written to (-target): tokufs:tokufile
+Touch object option (-touch): 0
+MPI_WTIME_IS_GLOBAL: 1681915911
+Timing results written to (-output): toku-nocompress-mpi-1proc-47001rcz-20gb
+Errors and warnings written to (-errout): stderr
+
+Environment Variables (MPI):
+MPICH_INTERFACE_HOSTNAME=localhost
+
+MPI-IO TEST v1.00.021: Thu Aug 18 16:57:00 2011
+
+
+MPI_info 15 Hints Used (RANK 0):
+Key: cb_buffer_size = 16777216
+Key: romio_cb_read = automatic
+Key: romio_cb_write = automatic
+Key: cb_nodes = 1
+Key: romio_no_indep_rw = false
+Key: romio_cb_pfr = disable
+Key: romio_cb_fr_types = aar
+Key: romio_cb_fr_alignment = 1
+Key: romio_cb_ds_threshold = 0
+Key: romio_cb_alltoall = automatic
+Key: ind_rd_buffer_size = 4194304
+Key: ind_wr_buffer_size = 524288
+Key: romio_ds_read = automatic
+Key: romio_ds_write = automatic
+Key: cb_config_list = *:1
+=== Effective Bandwidth (min [rank] avg max [rank]): 5.998862e+01 [4] 6.001021e+01 6.004143e+01 [0] Mbytes/s.
+=== Total Time (min [rank] avg max [rank]): 3.404246e+02 [0] 3.406017e+02 3.407243e+02 [4] sec.
+=== Write Bandwidth (min [rank] avg max [rank]): 6.501914e+01 [7] 6.501914e+01 6.501915e+01 [1] Mbytes/s.
+=== Write Time (min [rank] avg max [rank]): 3.143625e+02 [1] 3.143625e+02 3.143626e+02 [7] sec.
+=== MPI_File_Write_Open Time (min [rank] avg max [rank]): 1.035023e+00 [6] 1.035044e+00 1.035110e+00 [0] sec.
+=== MPI_File_Write_Wait Time (min [rank] avg max [rank]): 0.000000e+00 [0] 0.000000e+00 0.000000e+00 [0] sec.
+=== MPI_File_Write_Preallocate_time Time (min [rank] avg max [rank]): 0.000000e+00 [0] 0.000000e+00 0.000000e+00 [0] sec.
+=== MPI_Write_File_Close_Wait Time (min [rank] avg max [rank]): 2.502693e+01 [0] 2.520413e+01 2.532675e+01 [4] sec.
+=== Completed MPI-IO Write.
+=== Effective Bandwidth (min [rank] avg max [rank]): 4.756325e+01 [5] 4.756483e+01 4.756613e+01 [4] Mbytes/s.
+=== Total Time (min [rank] avg max [rank]): 4.297087e+02 [4] 4.297205e+02 4.297348e+02 [5] sec.
+=== Read Bandwidth (min [rank] avg max [rank]): 4.761019e+01 [6] 4.761027e+01 4.761044e+01 [7] Mbytes/s.
+=== Read Time (min [rank] avg max [rank]): 4.293088e+02 [7] 4.293104e+02 4.293111e+02 [6] sec.
+=== MPI_File_Read_Open Time (min [rank] avg max [rank]): 1.438379e-01 [0] 1.582545e-01 1.605918e-01 [7] sec.
+=== MPI_File_Read_Wait Time (min [rank] avg max [rank]): 0.000000e+00 [0] 0.000000e+00 0.000000e+00 [0] sec.
+=== MPI_File_Read_Preallocate_time Time (min [rank] avg max [rank]): 0.000000e+00 [0] 0.000000e+00 0.000000e+00 [0] sec.
+=== MPI_Read_File_Close_Wait Time (min [rank] avg max [rank]): 1.945281e-01 [1] 2.083472e-01 2.204158e-01 [5] sec.
+=== Completed MPI-IO Read.

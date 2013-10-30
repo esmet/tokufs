@@ -1,0 +1,70 @@
+// processes 0..n
+// tokufs readers/writers 0..m<=n
+
+// Given a file with many blocks, map block number to tokufs
+// process 0..m
+// that process owns the block fully, no blocks reside on mroe
+// than one tokufs process.
+
+// only processes 0..m have any data, so only they need to open
+def open(adiofd)
+    if (is_rwprocess(my_rank))
+        tokufs_open(&fd, adiofd->filename + "." + my_rank)
+        adiofd->fd_sys = fd
+
+// similarly, only tokufs processes, those 0..m, nee to close
+def close(adiofd)
+    if (is_rwprocess(my_rank))
+        tokufs_close(adiofd->fd_sys)
+
+define blocksize 1MB
+
+def block_owner(blockid, numproc)
+    return blockid % numproc
+
+def block_id(offset, blocksize)
+    return offset % blocksize
+
+def send_read_req(proc, adiofd, buf, offset, size)
+    mpi_send(proc, do_read, adiofd, buf, offste, size)
+
+def send_write_req(proc, adiofd, buf, offset, size)
+    mpi_send(proc, do_write, adiofd, buf, offste, size)
+
+def do_read(adiofd, buf, offset, size)
+    n =  tokufs_read_at(fd->fd_sys, buf, offset, size)
+    assert(n == size);
+
+def do_write(adiofd, buf, offset, size)
+    n = tokufs_write_at(fd->fd_sys, buf, offset,s size)
+    assert(n == size)
+     
+def write(adiofd, buf, count, dtype, ftype, offset)
+    size = count * sizeof(dtype)
+
+    while size > 0
+        proc = block_owner(block_id(offset, blocksize))
+        writesize = min(blocksize, size)
+        if proc == my_rank
+            do_write(adiofd, buf, offset, writesize)
+        else
+            send_write_req(proc, adiofd, buf, offset, writesize)
+        size -= writesize
+        offset += writesize
+        buf += writesize
+    
+def read(adiofd, buf, count, dtype, ftype, offset)
+    size = count * sizeof(dtype)
+
+    while size > 0
+        proc = block_owner(block_id(offset, blocksize))
+        readsize = min(blocksize, size)
+        if proc == my_rank
+            do_read(adiofd, buf, offset, readsize)
+        else
+            send_read_req(proc, adiofd, buf, offset, readsize)
+        offset += readsize
+        size -= readsize
+        buf += readsize
+
+

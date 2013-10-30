@@ -1,0 +1,30 @@
+- TokuFS has no metadata. As a result, it's functionality is limited to:
+open, close, read_at, write_at. Use of TokuFS files requires knowing ahead
+of time where your data is (because tokufs files have no size).
+
+- The current state of TokuFS is "proof of concept". It's purpose so far is
+to illustrate that traditional data block related problems with B-tree file
+systems can be fixed using a fractal tree index, which does not fragment, and
+makes efficient use of a disk's extremely limited IOPS.
+
+- benchmark-fs is a tool created to proof the proof of concept. With it, I was
+able to show the above claim that microupdates (while never as fast as big
+aligned serial updates) can give reasonable performance using the right
+data structure. 
+
+- I used a parallel strided write MPI I/O benchmark to show that multiple processes
+using a TokuFS fractal tree index can coexist efficiently because of the limited
+number of IOPS required per fractal tree. This is in stark contrast to multiple
+Btrees over a single disk, which compete for its seeks and do potentially small
+writes when they get them.
+
+Future work includes incorporating metadata into TokuFS to make it feel and 
+operate more like a real filesystme. This also gives an obvious opportunity
+to expose metadata workloads which look like microupdates, something we're good
+at and something Btrees are nearly incapable of. Additionally, a full set
+of posix-like file system functionality can lead to a FUSE implementation,
+which allows TokuFS to be mounted in user space, and lets TokuFS interpose on
+regular applications without rewriting to our API. FUSE has considerable overhead,
+but it's measurable and predictable, so we could take any performance changes seen
+over the FUSE interface and analyze them with the overhead in mind. Work in this
+area is being considered for milestone "Rockstar".

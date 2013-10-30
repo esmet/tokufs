@@ -1,0 +1,37 @@
+#!/bin/bash
+
+ROOT_DIR=$HOME/tokufs
+
+echo -n "Checking for mpich2 source tree... "
+if [ ! -e $ROOT_DIR/mpich2 ] ; then
+	echo "no"
+	echo "Extract the mpich2 source tree first before patching."
+	exit 1
+else
+	echo "yes"
+fi
+
+cd $ROOT_DIR/mpich2
+patch -f -p1 < $ROOT_DIR/scripts/prep-tokufs-mpich2.patch
+if [ $? != 0 ] ; then
+	echo "prep-tokufs-mpich2.patch failed with $?"
+	exit 1;
+fi
+
+#patch -f -p1 < $ROOT_DIR/scripts/tokufs-mpich2.patch
+#if [ $? != 0 ] ; then
+#	echo "tokufs-mpich2.patch failed with $?"
+#	exit 1;
+#fi
+
+find . -name configure -print | xargs rm -f
+if [ $? != 0 ] ; then
+	echo "find failed with $?"
+	exit 1;
+fi
+
+$ROOT_DIR/mpich2/maint/updatefiles
+if [ $? != 0 ] ; then
+	echo "updatefiles failed with $?"
+	exit 1;
+fi

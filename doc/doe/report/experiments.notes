@@ -1,0 +1,136 @@
+[PLFS - Algorithms overview]
+
+    PLFS, the parallel, log structured file system, is a write optimized
+file system especially suited for parallel writes to shared files. When
+N processes write to a single file, PLFS keeps a write log and index for
+each process on that file. To optimize write bandwidth, the log is 
+implemented using an append-to-file data structure. The index is a set of
+pairs mapping logical offset to physical offsets in the write log.
+To read a file, PLFS aggregates each of the N indicies into a single
+global offset lookup table, which maps every logical offset to the file
+and offset where the actual data is stored.
+
+[Random write experiment results]
+
+    In an experiment where 30GB of file data was written out in 47001
+byte, non-overlapping segments at random, PLFS achieved 118 MB/s write
+bandwidth. Each of PLFS's log writes appended to a file, resulting in 
+sequential disk IO, and optimal performance. In the same experiment,
+PLFS read back the entire file in logically sequential order, achieving
+9.6 MB/s read bandwidth. Because each write into the file was for
+a random logical offset, the resulting write log contained fragmented
+pieces of one logical file. Each 47001 byte read required a lookup
+in the global offset table, which mapped to a random offset into a write
+log which did not fit in memory. If a disk can only randomly seek 200
+times per second, and each read requires a seek, we can expect read
+bandwidth to be 47001 * 200 bytes per second, or 8.96MB/s. Thus, the
+read behavior of PLFS is explained by the data structure used and the
+limitations of random disk IO.
+
+[Microupdate experiment results]
+
+    To show that TokuFS performs well in a microupdate workload, we ran
+the following experiment on TokuFS, ext3, and TokuFS+BDB (Btree):
+Write out 20gb of data in 125 byte, non overlapping segments at random,
+such that the combination of all the writes fill the file completely.
+The purpose is to demonstrate how ext3 and btree indicies are unusuable in
+a situation where a dataset that does not fit in memory must have many 
+pieces of microdata updated in rapid succession. Using 2GB of memory as
+as cache, TokuFS can write out the file at 4.1 MB/s. and read it back
+in 125 byte sequential chunks at 16.8 MB/s. When TokuFS has 4GB of cache
+and writes data which is approximately 4x compressible, the write speed
+improves to 8.1 MB/s and read speeds to 22.7 MB/s. Using TokuFS with BDB
+(and therefore indexing using a Btree), the write bandwidth dipped to
+26 KB/s at the 40% completion mark. Ext3 suffered the same fate, writing
+out data at 22 KB/s at 15% completion mark. Read bandwidth was not
+measured due to the time it would have taken to write all of the data out.
+In summary, this workload performs at a reasonable rate under TokuFS, even
+reading back the data within a factor of 5 from optimal. Btrees on the
+other hand provide essentially unusuable performance.
+
+[Parallel IO experiment]
+
+    In another experiment, 8 processes performed an N-1 checkpoint to
+a shared MPI file. The write pattern for each process was strided across
+a logical file, meaning the logical offsets of each write for a certain
+process are increasing and separated by a fixed size. Since PLFS has
+a write log and index for each of the N writers to a file, there are
+8 append to file data structures and 8 indicies maintained during the
+write process. The size of each individual index is small compared to
+the size of the write log, and fits into memory for this experiment.
+Each process checkpointed 47001 byte records at each stride, with a
+total logical checkpoint file size of 20GB. PLFS was able to write
+out the data at 66MB/s, while the same experiment over XFS wrote it out
+at 72MB/s. Because PLFS wrote the data nearly as fast as the underlying
+file system alone, it can be considered optimal. Once the checkpoint
+was written out, each process read back the data it wrote out, in logically
+sequential order. Even though the data for each process was written out
+sequentially, the read bandwidth was only 25MB/s. With XFS alone, it was
+only 15MB/s.
+
+[Hypothesis]
+
+    Our hypothesis to explain the disparity between parallel read and
+write bandwidth is fragmentation. To support it, we ran the same MPI
+checkpoint experiment as described above, except that only one process
+was involved in writing out all of the data. Under this new scenario,
+PLFS was able to write out the data at 55MB/s, but read it back at a
+much improved 48MB/s. Similarly, XFS wrote the data at 63MB/s and improved
+its read bandwidth to 54MB/s. We see that when 8 processes sequentially
+write to distinct files in parallel, file system suffers fragmentation.
+We further hypothesize that fragmentation will occur when the underlying
+file system interleaves writes between files onto contiguous regions on
+disk. Thus, the problem applies in situations where there are less disk
+heads then processes writing in parallel (which is the case in our tests,
+with 8 processes writing to 8 files over a single disk).
+
+[Proof of fragmentation]
+
+    Strong evidence to this claim can be found in iostat output from both 8
+process and 1 process experiments. In the 1 process experiment for PLFS,
+iostat reports an average of 400 read operations issued per second, an
+average service time of 2.42ms, and an average request size of ~26 sectors.
+For the 8 process experiment, there were 200 read operations per second,
+with an average service time of 5.2ms, and ~270 sectors per request. Given
+this information, we see that in both cases the average read reqeust was
+the approximately the same size, but the service time and thus the number
+of requests that could be satisfied per second dropped to 45% of the single
+process case. This is consistent with the resultant bandwidth drop, where
+the 8 process experiment read data about half as fast as the one process
+experiment. 
+
+[Proof that more disks solve it]
+    
+    To prove that an equal number of disk heads can solve parallel write
+fragmentation, we ran the same experiment described above but instead
+with 5 processes and an XFS file system on a 5 disk raid. The application
+was able to write out the checkpoint data at 288 MB/s and read it back
+at 258 MB/s. That is a 4x increase in write performance, and a near 17x
+increase in read performance. Thus, by increasing the number of disks by
+a factor of five, we saw the expected increase in write performance but
+a more drastic increase in read performance, indicating that removing the
+contention for disks between processes fixed fragmentation issues.
+
+[Experimental notes]
+
+coyote/roadrunner   - PLFS MPI 8 process, 1 process
+pointy              - PLFS MPI 5 process
+tall1/tall2         - microupdate
+
+[Hardware]
+
+- coyote/roadrunner
+CPU: Intel Xeon, 8 core, 1.6 GHz
+RAM: 4GB
+DISK/FS: XFS, single disk
+
+- pointy
+CPU: AMD Operaton 6168, 48 core, throttles to 1.9 GHz, idles at 800 MHz
+RAM: 32GB
+DISK/FS: XFS, 5 disk RAID-0, 256KB stripe size.
+
+- tall1/tall2
+CPU: Intel Xeon, 8 core, 3.0 GHz
+RAM: 16GB
+DISK/FS: ext3, single disk
+

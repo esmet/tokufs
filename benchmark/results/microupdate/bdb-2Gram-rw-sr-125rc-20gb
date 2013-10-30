@@ -1,0 +1,27 @@
+File system benchmark
+invoked via: bin/benchmark-fs --random-write --serial-read -x 125 -n 171798680 -v -o /res/users/esmet/bdb-rw-sr-125rc-20gb 
+    * Hostname: tall1.rutgers.edu
+    * Number of records: 171798680
+    * Record size: 125
+    * File size: 21474835000
+    * Compressibility: 1.000000
+    * Target file name: ./dumpfile.fsbench
+    * Target file system: tokufs
+    * Page size: 512
+    * Cache size: 2147483648
+    * Underlying store: BerkeleyDB
+    * Verbose? yes
+    * Benchmarking serial write? no
+    * Benchmarking random write? yes
+    * Benchmarking serial read? yes
+    * Benchmarking random read? no
+    * Output: /res/users/esmet/bdb-rw-sr-125rc-20gb
+benchmark_random_write: opened ./dumpfile.fsbench
+wrote 1073741750 bytes so far, throughput 0.222
+wrote 2147483500 bytes so far, throughput 0.070
+wrote 3221225250 bytes so far, throughput 0.047
+wrote 4294967000 bytes so far, throughput 0.037
+wrote 5368708750 bytes so far, throughput 0.031
+wrote 6442450500 bytes so far, throughput 0.028
+wrote 7516192250 bytes so far, throughput 0.027
+wrote 8589934000 bytes so far, throughput 0.026

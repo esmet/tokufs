@@ -1,0 +1,123 @@
+# Goals, motivation:
+ 
+- Fast metadata scans, for fast directory scans of logically adjacent data
+- Fast datablock upserts, for good microdata update performance
+- Fast filedata scans, for good regular file IO
+
+# Current design:
+# filedata dictionary per file.
+- can't scale to more than O(dozens) files
+- no metadata, just files with arbitrary names
+- fast file block scans, simple algorithms.
+
+# Possible designs:
+
+Important note: Real file systems track what files are contained within
+a directory by managing an actual directory structure and keeping
+variable sized block data about its children files. 
+Since our index maintains a sorted order of pathnames on its own, 
+we don't need this kind of structure.
+However, it is still necessary to know when a file path cannot exist,
+because its parent directory doesn not exist. For example, "/a/b" cant
+be created without "/a" existing. We should only need to store metadata
+about directories and no block data.
+
+# Different meta/file dictionaries
+- All logically adjacent file/meta data is physically adjacent
+- Fast file scan, fast directory scan
+- But metadata lookup for file F does not amortize any file IO on F
+schema:
+path -> tokufs meta
+path+block_id -> blocks for given path
+meta ex:
+"/bin"          -> [dir=true, nblocks=0, bs=512, nlinks=1]
+"/bin/ls"       -> [dir=false, nblocks=15 ...]
+"/bin/pwd"      -> ...
+"/home"         -> ...
+"/home/esmet"   -> ...
+"/tmp"          -> ...
+"/usr"          -> ...
+data ex:
+"/bin/ls"0x0    -> [data]
+"/bin/ls"0x1    -> [data]
+...
+"/bin/ls"0xN    -> [data]
+"/bin/pwd"0x0   -> [data]
+...
+...
+
+# Same meta/file dictionary
+- First block of file is its metadata
+- Somewhat convolutes the idea that offset % BLOCK_SIZE -> block_id, must
+  add 1 now.
+- Fast file scan, but slow directory scan. Since meta data is first block
+  of each file, then meta scans incur random IO.
+schema:
+path+block_id -> blocks for given path, where block 0 is meta
+"/bin"              -> [meta]
+"/bin/ls"           -> [data]
+...
+"/home"             -> [meta]
+"/home/du.all"      -> [meta]
+"/home/du.all"0x1   -> [data0]
+"/home/esmet"       -> [meta]
+"/home/guest"       -> [meta]
+"/tmp"              -> [meta]
+"/tmp/log0"         -> [meta]
+"/tmp/log0"0x1      -> [data]
+...
+"/tmp/folder"       -> [meta]
+point is, metadata and file data are interleaved. there are probably more
+file blocks than meta blocks, so meta scans will suffer from this more
+  
+# Different meta/file directories, first n file blocks coupled with metadata
+- Fast, but not optimal meta scans. The added file bock data with each
+  piece of metadata will proportionally slow the speed that it is scanned.
+- Metadata lookups amortize the first n data blocks read on a file. This is
+  good for microfiles.
+- Fast, but not optimal file scans. Full file scans will be within n IOs
+  of optimal. File scans over any blocks except the first n will be
+  optimal.
+- Worst case for file scans is a file with n+1 blocks.
+  This seems like a common worse case, so it's something to remember. Can
+  we find a happy medium? Note that larger blocks decrease the metascan
+  performance but pushes the first/second block boundry further. Same goes
+  for adding more blocks to cluster with the metadata.
+schema:
+path -> tokufs meta, block 0..n
+path+block_id -> blocks for given path, id > n
+meta ex, n=2:
+"/bin"          -> [dir=true...]
+"/bin/ls"       -> [dir=false, nblocks=4...][data0][data1]
+data ex:
+"/bin/ls"0x2    -> [data]
+"/bin/ls"0x3    -> [data]
+
+# And the winner is? Different meta and file dictionaries. We will have to
+# measure before determining if meta lookups need to amortize first block
+# file fetches for good performance. From 50,000 ft, it looks like a factor
+# of two for random microfile reads.
+To recap, the initial design will be:
+meta dict:
+    path1 -> [tokustat]
+    path2 -> [tokustat]
+    ...
+data dict:
+    path1+BLOCKID0 -> [block]
+    path1+BLOCKID1 -> [block]
+    ...
+    path2+BLOCKID0 -> [block]
+    ...
+
+# Engineering TODO:
+[check] Change API to be more posix-like
+[check] Extend api to have new metadata operations. Just enough to satisfy fuse?
+  more?
+- Fix tests for new API, add tests for new functionality.
+- Write new metadata benchmark
+
+struct tokustat 
+{
+    struct stat st;
+    // more later??
+};

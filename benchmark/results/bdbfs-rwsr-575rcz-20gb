@@ -1,0 +1,27 @@
+File system benchmark
+invoked via: bin/benchmark-fs --random-write --serial-read -x 575 -n 37347540 -m 1950 -v -o bdbfs-rwsr-575rcz-20gb 
+ * Hostname: roadrunner.tokutek.com
+ * Number of records: 37347540
+ * Record size: 575
+ * File size: 21474835500
+ * Compressibility: 1
+ * Target file name: dumpfile.fsbench
+ * Target file system: TokuFS
+ * Page size: 512
+ * Cache size: 1950 MB
+ * Underlying store: BerkeleyDB
+ * Verbose? yes
+ * Benchmarking serial write? no
+ * Benchmarking random write? yes
+ * Benchmarking serial read? yes
+ * Benchmarking random read? no
+ * Output: bdbfs-rwsr-575rcz-20gb
+Benchmarks starting: Fri Aug 26 13:52:45 2011
+-- benchmark_random_write: opening dumpfile.fsbench
+-- benchmark_random_write: done
+-- wrote 1073741775 bytes so far, throughput 0.375
+-- wrote 2147483550 bytes so far, throughput 0.098
+-- wrote 3221225325 bytes so far, throughput 0.066
+-- wrote 4294967100 bytes so far, throughput 0.054
+-- wrote 5368708875 bytes so far, throughput 0.048
+-- wrote 6442450650 bytes so far, throughput 0.045

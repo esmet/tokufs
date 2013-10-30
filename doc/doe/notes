@@ -1,0 +1,108 @@
+Here's what John Bent said.
+
+---------- Forwarded message ----------
+From: John Bent <johnbent@lanl.gov>
+Date: Wed, May 18, 2011 at 11:01 PM
+Subject: Re: mpi-io hacking
+To: "Bradley C. Kuszmaul" <bradley@tokutek.com>
+Cc: Michael Bender <michael@tokutek.com>
+
+
+Excerpts from Bradley C. Kuszmaul's message of Mon May 16 13:06:35 -0600 2011:
+> Hi John,
+>
+Hey Bradley!  Hey Michael!
+
+> I was talking to Gary Grider about how to get MPI codes to use fractal trees.
+> He suggested that hacking a version of MPI-IO that has fractal trees under it
+> (instead of file I/O) might be productive, and that I should talk to you.
+>
+> Can you give me any pointers at what to think about for a project like this?
+> Is there a convenient place to replace calls to write() with calls to another
+> function?
+>
+It's an interesting idea.  The ADIO interface within ROMIO (the only current
+implementation of the MPI-IO interface) is a very convenient place to interpose
+on applications.  We've also done it with FUSE.  FUSE is much more
+challenging however as it has a much larger set of functions to
+support.  Things like giving a different user write permissions to an
+existing file, having that 2nd user write new data, and then allowing
+the original owner to delete the file drove us absolutely nuts when we
+were developing PLFS.  MPI-IO has a much smaller set of routines so
+it's easier to get an implementation and testing is much easier.
+Also, MPI-IO has collective routines where a communicator is passed.
+We used that for all sorts of optimizations by coordinating access to
+storage.
+
+If you go this route, I would recommend cheating a bit at least
+initially.  Patching MPI to add a new ADIO layer is a bit of a pain.
+Instead, I'd recommend using an existing ADIO layer and just replacing
+all the code within the functions.  When you do want to go ahead and
+patch an MPI with your own new ADIO interface, you might check out
+plfs:
+
+ svn co https://plfs.svn.sourceforge.net/svnroot/plfs/trunk plfs/trunk
+
+  then read plfs/trunk/README.install section 2
+
+  But as I say, the easier way would probably just be to replace all the
+  code in ad_pvfs probably.  So if you were using openmpi-1.4.3 for
+  example, the code you'd edit would be in
+  openmpi-1.4.3/ompi/mca/io/romio/romio/adio/ad_pvfs.  Then, configure
+  mpi with something like:
+  ./configure --with_io_romio_flags=--with-file-system=pvfs
+
+  Then do MPI_File_open('pvfs:/some/path') and it should go to your code.
+
+  Let me know if this doesn't help and I'll try again.  Happy to answer
+  any more questions.  Sorry again about the delay.  I thought I'd
+  already sent this and then remembered today that I'd left it in 1/2
+  finished draft mode.
+
+  > On another front (putting on my MIT hat), I'm interested in competing
+  > in the GraySort sorting contest (sorting 100TB in under a few hours).
+  > Do you know of any machines with big I/O systems that I might be able
+  > to get access to?
+  >
+  If you ship us code, we might be able to run something for you.  I was
+  hoping our student could code up an MPI sort program that we could run
+  on our new cielo supercomputer which we hope can read/write at 100
+  GB/s.  That would have got us 2 TB for minute sort I was thinking.  We
+  didn't finish it in time and it's not clear we could have got an
+  allocation on the machine.  But maybe...  Also, the machine isn't
+  working to spec yet.  But hopefully soon.  I think it did get almost
+  90 GB/s once.
+
+====================================================================
+
+>> Buzz words
+MPI: Message passing interface
+	- Standard
+MPI I/O: Message passing interface I/O
+	- Interface in MPI that deals with I/O
+OpenMPI: Open source implementation of MPI
+	- Libraries that allow programs to use MPI.
+	- Uses ROMIO to implement the MPI I/O sub interface
+ROMIO:
+	- Open source implementation of MPI I/O
+ROMIO ADIO: ROMIO Abstract-Device I/O
+	- interface for "devices" which link up file stores to ROMIO
+	eg:	ad_pvfs, ad_ntfs etc link up romio's impl with pvfs or ntfs.
+PVFS: Parallel virtual file system
+	- Provides an implementation of ROMIO ADIO interface such that
+	ROMIO may use pvfs as its data store
+OrangeFS:
+	- Fork of PVFS, not completely sure of the differences
+	- TODO: Find out
+DBPF: Database plus files
+	- ADIO Implemented with both a database and files, default
+	for PVFS/OrangeFs I believe.
+
+To make things easier, we'll take an existing
+ADIO interface implementation and replace its internals with our code.
+It is suggested we replace ad_pvfs code.
+
+June 2011: It turned out to make the most sense to create our own ROMIO device
+via an ADIO implementation for TokuFS. This layer will in turn call a shared
+TokuFS library. This way, we compile the ADIO layer only when it changes, and
+libtokufs changes are transparent.

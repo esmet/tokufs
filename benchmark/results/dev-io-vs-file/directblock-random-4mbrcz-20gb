@@ -1,0 +1,78 @@
+File system benchmark
+invoked via: bin/benchmark-fs --random-write --serial-read -x 4194304 -n 5000 -u -v -f /dev/sdf -o /root/directblock-random-4mbrcz-20gb 
+ * Hostname: coyote.tokutek.com
+ * Number of records: 5000
+ * Record size: 4194304
+ * File size: 20971520000
+ * Compressibility: 1
+ * Target file name: /dev/sdf
+ * Target file system: ufs
+ * Page size: 4096
+ * Verbose? yes
+ * Benchmarking serial write? no
+ * Benchmarking random write? yes
+ * Benchmarking serial read? yes
+ * Benchmarking random read? no
+ * Output: /root/directblock-random-4mbrcz-20gb
+Benchmarks starting: Fri Aug 12 14:14:14 2011
+-- benchmark_random_write: opening /dev/sdf
+-- benchmark_random_write: done
+-- wrote 1048576000 bytes so far, throughput 356.469
+-- wrote 2097152000 bytes so far, throughput 204.046
+-- wrote 3145728000 bytes so far, throughput 95.341
+-- wrote 4194304000 bytes so far, throughput 75.195
+-- wrote 5242880000 bytes so far, throughput 66.763
+-- wrote 6291456000 bytes so far, throughput 62.010
+-- wrote 7340032000 bytes so far, throughput 59.077
+-- wrote 8388608000 bytes so far, throughput 56.985
+-- wrote 9437184000 bytes so far, throughput 55.524
+-- wrote 10485760000 bytes so far, throughput 54.426
+-- wrote 11534336000 bytes so far, throughput 53.530
+-- wrote 12582912000 bytes so far, throughput 52.774
+-- wrote 13631488000 bytes so far, throughput 52.192
+-- wrote 14680064000 bytes so far, throughput 51.694
+-- wrote 15728640000 bytes so far, throughput 51.261
+-- wrote 16777216000 bytes so far, throughput 50.902
+-- wrote 17825792000 bytes so far, throughput 50.585
+-- wrote 18874368000 bytes so far, throughput 50.297
+-- wrote 19922944000 bytes so far, throughput 50.052
+-- benchmark_random_write: closing /dev/sdf
+-- benchmark_random_write: done
+-- benchmark_serial_read: opening /dev/sdf
+-- benchmark_serial_read: done
+-- read 1048576000 bytes so far, throughput 26.375
+-- read 2097152000 bytes so far, throughput 42.627
+-- read 3145728000 bytes so far, throughput 52.671
+-- read 4194304000 bytes so far, throughput 57.684
+-- read 5242880000 bytes so far, throughput 57.076
+-- read 6291456000 bytes so far, throughput 61.885
+-- read 7340032000 bytes so far, throughput 65.827
+-- read 8388608000 bytes so far, throughput 69.128
+-- read 9437184000 bytes so far, throughput 71.954
+-- read 10485760000 bytes so far, throughput 74.379
+-- read 11534336000 bytes so far, throughput 76.476
+-- read 12582912000 bytes so far, throughput 78.320
+-- read 13631488000 bytes so far, throughput 79.925
+-- read 14680064000 bytes so far, throughput 81.377
+-- read 15728640000 bytes so far, throughput 82.679
+-- read 16777216000 bytes so far, throughput 83.866
+-- read 17825792000 bytes so far, throughput 84.940
+-- read 18874368000 bytes so far, throughput 85.909
+-- read 19922944000 bytes so far, throughput 86.789
+-- benchmark_serial_read: closing /dev/sdf
+-- benchmark_serial_read: done
+Benchmarks completed: Fri Aug 12 14:25:15 2011
+Random write times:
+ * open:           70
+ * io:             420876070
+ * close:          24
+ * total:          420876788
+ * io throughput:  49.828255 MB/s
+ * effective:      49.828170 MB/s
+Serial read times:
+ * open:           22
+ * io:             239340587
+ * close:          15
+ * total:          239341236
+ * io throughput:  87.622080 MB/s
+ * effective:      87.621842 MB/s

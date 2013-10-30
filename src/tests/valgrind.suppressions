@@ -1,0 +1,29 @@
+{
+   <insert_a_suppression_name_here>
+   Memcheck:Leak
+   fun:calloc
+   obj:/lib/libdl-2.14.1.so
+   fun:dlsym
+   fun:toku_memory_startup
+   fun:toku_brt_init
+   fun:toku_ydb_init
+   fun:libtokudb_init
+   obj:/home/esmet/local/lib/libtokudb.so
+   obj:/home/esmet/local/lib/libtokudb.so
+}
+{
+   <insert_a_suppression_name_here>
+   Memcheck:Leak
+   fun:malloc
+   fun:_dl_signal_error
+   fun:_dl_signal_cerror
+   fun:_dl_lookup_symbol_x
+   obj:/lib/libc-2.14.1.so
+   obj:/lib/libdl-2.14.1.so
+   fun:_dl_catch_error
+   obj:/lib/libdl-2.14.1.so
+   fun:dlsym
+   fun:toku_memory_startup
+   fun:toku_brt_init
+   fun:toku_ydb_init
+}

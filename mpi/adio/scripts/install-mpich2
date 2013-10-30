@@ -1,0 +1,39 @@
+#!/bin/bash
+
+ROOT_DIR="$HOME/tokufs"
+
+MPICH2_DIR="mpich2-1.3.2p1"
+MPICH2_TAR="${MPICH2_DIR}.tar.gz"
+MPICH2_URL="http://www.mcs.anl.gov/research/projects/mpich2/downloads/tarballs/1.3.2p1/$MPICH2_TAR"
+
+echo  "Making TokuFS... "
+(cd $ROOT_DIR && make install) || exit 1
+
+echo -n "Checking if the mpich2 source tree exists... "
+if [ -e $ROOT_DIR/mpich2 ] ; then
+	echo "yes"
+else
+	echo "no"
+    echo -n "Checking if the mpich2 archive exists... "
+    mkdir -p $ROOT_DIR/archives/
+    if [ -e $ROOT_DIR/archives/$MPICH2_TAR ] ; then
+        echo "yes"
+    else
+        echo "no"
+        echo "Fetching mpich2 archive... "
+        (cd $ROOT_DIR/archives && wget $MPICH2_URL) || exit 1
+    fi
+    echo "Extracting MPICH archive... "
+    (cd $ROOT_DIR && tar xvf $ROOT_DIR/archives/$MPICH2_TAR && /bin/mv $MPICH2_DIR mpich2) || exit 1
+fi
+
+echo "Applying prep patch to mpich2... "
+$ROOT_DIR/scripts/apply-prep-patch || exit 1
+
+echo "Applying ad_tokufs ADIO patch to mpich2... "
+$ROOT_DIR/scripts/apply-adio-patch || exit 1
+
+echo "Running $ROOT_DIR/scripts/rebuild-mpich2... " 
+$ROOT_DIR/scripts/rebuild-mpich2 || exit 1
+
+echo "mpich2 install successful"

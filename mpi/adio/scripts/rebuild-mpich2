@@ -1,0 +1,15 @@
+#!/bin/sh
+
+ROOT_DIR="$HOME/tokufs"
+PREFIX="$HOME/local"
+WITH_FS="ufs+nfs+tokufs"
+
+# Uncomment this for pvfs2 support
+#PVFS2FLAGS = --with-pvfs2=$PREFIX
+
+if [ ! -e $ROOT_DIR/mpich2 ] ; then
+    echo No mpich2 source tree found. Install one first.
+    exit 1
+fi
+
+cd $ROOT_DIR/mpich2 && ./configure --prefix="$PREFIX" --with-file-system="$WITH_FS" $PVFS2FLAGS --disable-f77 --disable-fc LDFLAGS="-L$PREFIX/lib -ltokufs -Wl,--rpath,$PREFIX/lib" CFLAGS="-I$PREFIX/include" && make && make install
