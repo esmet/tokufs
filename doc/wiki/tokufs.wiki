@@ -1,4 +1,4 @@
-    TokuFS is a virtual, user-space file system optimized for microdata
+TokuFS is a virtual, user-space file system optimized for microdata
 updates without fragmentation. TokuFS is imlpemented as a library,
 libtokufs, which exports a small, posix-like interface. It's 
 functionality includes:
@@ -17,21 +17,21 @@ functionality includes:
     - write_at(toku_fd, buf, count, offset) 
         write at a given offset
     
-    Because TokuFS is a virtual file system, it requires an existing 
+Because TokuFS is a virtual file system, it requires an existing 
 underlying file system for storage. The mount and unmount functions
 allow an application to specify where on the local file system TokuFS 
 should write its data. In this way, TokuFS is a layered file system, 
 where the top layer is a TokuFS namespace and fractal tree index, and 
 the bottom layer is a local namespace on some traditional file system. 
 
-    TokuFS builds on top of TokuDB, an implementation of key value
+TokuFS builds on top of TokuDB, an implementation of key value
 storage using fractal trees. TokuFS views files as a collection of
 blocks, each numbered incrementally from 0. These block numbers are
 used as keys into TokuDB, where the value is a block of bytes to
 hold the data. Minus the database, this is exactly how real file
 systems view files. 
 
-    For simplicity, there exists a single database for each file. An 
+For simplicity, there exists a single database for each file. An 
 optimized approach would use a dedicated set of databases to hold
 metadata, and a dedicated set for data blocks. The keys into the
 metadata database would be TokuFS filenames, and the values would
@@ -40,14 +40,14 @@ the data for that particular file. Additionally, the data block databases
 would use a file indentifier plus block number for its keys, to
 disambiguate similar block numbers for different files. 
 
-    In addition to the TokuFS API described above, applications can
+In addition to the TokuFS API described above, applications can
 interface with TokuFS using MPI IO through an interface called ADIO.
 The ADIO interface allows storage systems such as TokuFS to interpose
 on parallel MPI IO applications transparently. All these applications
 need to do is refer to files with the prefix 'tokufs:', and libtokufs
 is used to read and write the file data.
     
-    MPI IO is used to coordinate the IO among parallel processes for
+MPI IO is used to coordinate the IO among parallel processes for
 high performance. Since TokuDB environments and dictionaries are only 
 accessible to one process at a time, the ADIO implementation represents
 files as the union of each processes share in the underlying TokuFS file.
@@ -62,7 +62,7 @@ Subsequent reads will only produce data if the region read was previously
 written to by some process that opened file F as pid P. In the simplest
 case, the reading process is the same as the writing process.
 
-    To help illustrate how files are represented in the ADIO layer for
+To help illustrate how files are represented in the ADIO layer for
 TokuFS, consider 4 processes writing non overlapping 4 byte segments to
 form a 16 byte file. The following psuedo code is run by each process 
 in parallel:
@@ -111,7 +111,7 @@ the logical ADIO file. Graphically:
 
         ['0', '1', '2', '3']
 
-    The current implementation limits each process to read only what it
+The current implementation limits each process to read only what it
 wrote into its particular share while each process has its share open.
 This was to assist in rapid development and debugging, since N-1
 checkpointing applications only read the data they write anyway. It is
