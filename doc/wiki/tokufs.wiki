@@ -3,20 +3,14 @@ updates without fragmentation. TokuFS is imlpemented as a library,
 libtokufs, which exports a small, posix-like interface. It's 
 functionality includes:
 
-    - mount(local_path)
-        attempt to mount tokufs at the given local path
-    - unmount()
-        unmount tokufs
-    - open(&toku_fd, tokufs_path, pid) 
-        open a file in the TokuFS namespace as a certain process
-        data read or written will only correspond to that pid.
-    - close(toku_fd) 
-        close an open file
-    - read_at(toku_fd, buf, count, offset) 
-        read at a given offset
-    - write_at(toku_fd, buf, count, offset) 
-        write at a given offset
-    
+ mount(local_path) \\attempt to mount tokufs at the given local path
+ unmount() \\unmount tokufs
+ open(&toku_fd, tokufs_path, pid) \\open a file in the TokuFS namespace as a certain process 
+                                    and data read or written will only correspond to that pid.
+ close(toku_fd) \\close an open file
+ read_at(toku_fd, buf, count, offset) \\read at a given offset
+ write_at(toku_fd, buf, count, offset)\\ write at a given offset
+
 Because TokuFS is a virtual file system, it requires an existing 
 underlying file system for storage. The mount and unmount functions
 allow an application to specify where on the local file system TokuFS 
@@ -46,7 +40,7 @@ The ADIO interface allows storage systems such as TokuFS to interpose
 on parallel MPI IO applications transparently. All these applications
 need to do is refer to files with the prefix 'tokufs:', and libtokufs
 is used to read and write the file data.
-    
+
 MPI IO is used to coordinate the IO among parallel processes for
 high performance. Since TokuDB environments and dictionaries are only 
 accessible to one process at a time, the ADIO implementation represents
@@ -92,23 +86,14 @@ The contents of each data.tokudb form sparse files whose union yields
 the logical ADIO file. Graphically:
 
     env.0/data.tokudb
-
         ['0', null, null, null]
-
     env.1/data.tokudb
-
         [null, '1', null null]
-
     env.2/data.tokudb
-
         [null, null, '2', null]
-
     env.3/data.tokudb
-
         [null, null, null, '3']
-
     = ADIO logical "/mnt/tokufs/myfile"
-
         ['0', '1', '2', '3']
 
 The current implementation limits each process to read only what it
