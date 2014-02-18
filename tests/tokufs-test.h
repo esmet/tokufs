@@ -10,7 +10,9 @@
 #include <string.h>
 #include <assert.h>
 
-#include <tokufs.h>
-#include <toku/debug.h>
+#include "../include/tokufs.h"
+#include "../include/toku/debug.h"
+
+#include <tokudb.h>
 
 #endif /* TEST_H */

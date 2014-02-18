@@ -2,7 +2,7 @@
  * TokuFS
  */
 
-#define TOKUDB_CURSOR_CONTINUE 0
+#define TOKUDB_CURSOR_CONTINUE_NEW 0
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
@@ -960,7 +960,7 @@ static int block_scan_cb(DBT const * key, DBT const * val, void * extra)
         ret = info->cb(key->data, block_num, val->data, info->extra);
         if (ret == BSTORE_SCAN_CONTINUE) {
             info->do_continue = 1;
-            ret = TOKUDB_CURSOR_CONTINUE;
+            ret = TOKUDB_CURSOR_CONTINUE_NEW;
         }
     }
 
@@ -999,7 +999,7 @@ int toku_bstore_scan(struct bstore_s * bstore,
     // acquire a range lock on the block range we want, so
     // that we maybe benefit from prefetching within the range
 #ifndef USE_BDB
-    ret = cursor->c_pre_acquire_range_lock(cursor, &key, &prefetch_key);
+    ret = cursor->c_set_bounds(cursor, &key, &prefetch_key, true, 0);
 #else
     (void) cursor;
     ret = ENOSYS;
@@ -1151,7 +1151,7 @@ static int meta_scan_cb(DBT const * key, DBT const * val, void * extra)
     info->do_continue = 0;
     ret = info->cb(key->data, val->data, info->extra);
     if (ret == BSTORE_SCAN_CONTINUE) {
-        ret = TOKUDB_CURSOR_CONTINUE;
+        ret = TOKUDB_CURSOR_CONTINUE_NEW;
         info->do_continue = 1;
     }
 
