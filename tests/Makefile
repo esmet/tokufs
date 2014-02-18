@@ -23,8 +23,8 @@ endif
 INCDIR = ../include
 LIBDIR = ../lib 
 
-CPPFLAGS += -DMOUNT_PATH=\"$@.mount\" -I$(INCDIR) -I/home/ftfs/local/include/
-LDFLAGS += -L$(LIBDIR) -Wl,-rpath,$(LIBDIR) -ltokufs -L/home/ftfs/local/lib/ -ltokufractaltree -ltokuportability
+CPPFLAGS += -DMOUNT_PATH=\"$@.mount\" -I$(INCDIR) -I$(HOME)/local/include/
+LDFLAGS += -L$(LIBDIR) -Wl,-rpath,$(LIBDIR) -ltokufs -L$(HOME)/local/lib/ -ltokufractaltree -ltokuportability
 
 OBJECTS := $(patsubst %.c, %, $(wildcard *.c))
 TARGETS = $(OBJECTS)

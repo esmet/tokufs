@@ -1,4 +1,5 @@
 TokuFS is a user-space filesystem written on top of TokuKV, a fractal tree
 index implementation.
 
-It has not been maintained in a while. It might not compile.
+You need to build TokuKV from the repository first. Set the prefix for tokuKV to be /home/yourself/local.
+TokuKV was pulled on 2/12/14

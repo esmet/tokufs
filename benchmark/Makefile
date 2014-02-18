@@ -7,9 +7,9 @@ include ../common/common.mk
 INCDIR = ../include
 LIBDIR = ../lib
 
-CPPFLAGS += -I$(INCDIR) -D_XOPEN_SOURCE=500 -I/home/ftfs/local/include/
+CPPFLAGS += -I$(INCDIR) -D_XOPEN_SOURCE=500 -I$(HOME)/local/include/
 LDFLAGS += -L$(LIBDIR) -Wl,--rpath,$(LIBDIR) 
-LDLIBS += -ltokufs -pthread -L/home/ftfs/local/lib/ -ltokufractaltree -ltokuportability
+LDLIBS += -ltokufs -pthread -L$(HOME)/local/lib/ -ltokufractaltree -ltokuportability
 
 OBJECTS := $(patsubst %.c, %, $(wildcard *.c))
 # threadpool is not going to be target
