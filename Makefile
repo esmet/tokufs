@@ -15,7 +15,7 @@ bdb:
 all: $(patsubst %, %.makesubdir, $(ALL_BUILD_SUBDIRS)) 
 syntax: $(patsubst %, %.makesubdir.syntax, $(ALL_BUILD_SUBDIRS)) 
 
-PREFIX=/home/esmet/local
+PREFIX=/home/ftfs/local/
 
 check:  default
 	$(MAKE) -j8 -s -k -C src/tests check

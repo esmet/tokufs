@@ -21,10 +21,10 @@ else
 endif
 
 INCDIR = ../include
-LIBDIR = ../lib
+LIBDIR = ../lib 
 
-CPPFLAGS += -DMOUNT_PATH=\"$@.mount\" -I$(INCDIR)
-LDFLAGS += -L$(LIBDIR) -Wl,-rpath,$(LIBDIR) -ltokufs
+CPPFLAGS += -DMOUNT_PATH=\"$@.mount\" -I$(INCDIR) -I$(HOME)/local/include/
+LDFLAGS += -L$(LIBDIR) -Wl,-rpath,$(LIBDIR) -ltokufs -L$(HOME)/local/lib/ -ltokufractaltree -ltokuportability
 
 OBJECTS := $(patsubst %.c, %, $(wildcard *.c))
 TARGETS = $(OBJECTS)
@@ -32,6 +32,9 @@ TARGETS = $(OBJECTS)
 .PHONY: all check tidy clean 
 
 all: $(OBJECTS)
+
+$(OBJECTS): %: %.c
+	$(CC) $(CFLAGS) $(CPPFLAGS) -o $@ $< $(LDFLAGS)
 
 check: tidy all $(patsubst %, %.check, $(TARGETS)) tidy
 

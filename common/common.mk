@@ -7,7 +7,7 @@ PREFIX = $(HOME)/local
 CC = gcc
 LD = gcc
 
-CFLAGS += -Wall -Wextra -Werror -Wshadow
+CFLAGS += -Wall -Wextra -Wshadow #-Werror -Wshadow
 CFLAGS += -Wmissing-prototypes -Wmissing-declarations  
 CFLAGS += -std=c99
 

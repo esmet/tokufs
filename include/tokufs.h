@@ -8,7 +8,8 @@
 #include <sys/stat.h>
 #include <fcntl.h>
 #include <utime.h>
-
+#include <unistd.h>
+#include <sys/types.h>
 /* TokuFS functions return 0 on success and -ERRNO on error. */
 #include <errno.h>
 

@@ -11,14 +11,14 @@ LIBTOKUFS = libtokufs.so
 LIBTOKUFS_PATH := $(LIBDIR)/$(LIBTOKUFS)
 
 CFLAGS += -fPIC
-CPPFLAGS += -I$(INCDIR) -I$(PREFIX)/include
+CPPFLAGS += -I$(INCDIR) -I$(PREFIX)/include 
 LDFLAGS += -shared -Wl,-soname,$(LIBTOKUFS) -fPIC
 LDFLAGS += -Wl,-rpath,$(PREFIX)/lib -L$(PREFIX)/lib -pthread
 
 ifeq ($(BDB), 1)
 	LD_LIBS += -ldb
 else
-	LD_LIBS += -ltokudb -ltokuportability
+	LD_LIBS += -ltokufractaltree -ltokuportability
 endif
 
 BLOCKSIZE = 0

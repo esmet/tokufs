@@ -1,4 +1,4 @@
-    benchmark-fs is a generalized file system benchmark which
+Benchmark-fs is a generalized file system benchmark which
 measure file data operation workloads which can be described as
 a set of N operations each of size R. These workloads include:
 
@@ -20,7 +20,7 @@ figures and presented in megabytes per second. To account for kernel
 page caching, benchmark-fs can be given an option to attempt to drop
 caches before each run using /proc magic.
 
-    Because benchmark-fs was intended to compare file systems under
+Because benchmark-fs was intended to compare file systems under
 similar workloads, the code is designed to flexible allow for
 different file systems to hook up to a template benchmark through
 a benchmark_file structure interface. At the time of this writing,
@@ -39,7 +39,7 @@ to benchmark-fs in this document, because it is bound to become
 obsolete soon and it would be a pain to keep this up to date. Instead,
 run benchmark-fs with --help and the usage is nicely spelled out.
 
-    benchmark-fs was written with file data intensive workloads in
+Benchmark-fs was written with file data intensive workloads in
 mind. That being said, it is not useful for measuring metadata 
 intensive workloads such as massive file creation, deletion, etc.
 It is not clear whether or not it makes sense to fork off benchmark-fs

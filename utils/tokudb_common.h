@@ -12,10 +12,10 @@
 #include <signal.h>
 #include <memory.h>
 
-typedef u_int8_t bool;
+//typedef u_int8_t bool;
 
-#define true ((bool)1)
-#define false ((bool)0)
+//#define true ((bool)1)
+//#define false ((bool)0)
 
 #define SET_BITS(bitvector, bits)      ((bitvector) |= (bits))
 #define REMOVE_BITS(bitvector, bits)   ((bitvector) &= ~(bits))
