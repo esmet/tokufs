@@ -12,11 +12,13 @@
 #include <errno.h>
 #include <time.h>
 
+/* wkj: compiler error that this is already defined
 static int gettid(void)
 {
     int tid = (int) syscall(__NR_gettid);
     return tid;
 }
+*/
 
 /* Fuse silliness that lets us use the 'new' api */
 #define FUSE_USE_VERSION 26

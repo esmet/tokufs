@@ -1,0 +1,4 @@
+# ignore executables
+
+tokufs-fuse
+echofs-fuse

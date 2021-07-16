@@ -15,7 +15,7 @@ bdb:
 all: $(patsubst %, %.makesubdir, $(ALL_BUILD_SUBDIRS)) 
 syntax: $(patsubst %, %.makesubdir.syntax, $(ALL_BUILD_SUBDIRS)) 
 
-PREFIX=/home/ftfs/local/
+PREFIX=/home/jannen/local/
 
 check:  default
 	$(MAKE) -j8 -s -k -C src/tests check
